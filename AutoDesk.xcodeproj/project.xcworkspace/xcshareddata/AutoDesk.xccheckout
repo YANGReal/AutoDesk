@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F0597ABB-23D8-4D28-8122-1DFE89A6B1EF</string>
+	<key>IDESourceControlProjectName</key>
+	<string>AutoDesk</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8B81FB2B-15F2-4662-BA55-03F33BA8A632</key>
+		<string>https://github.com/YANGReal/AutoDesk.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>AutoDesk.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8B81FB2B-15F2-4662-BA55-03F33BA8A632</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/YANGReal/AutoDesk.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8B81FB2B-15F2-4662-BA55-03F33BA8A632</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8B81FB2B-15F2-4662-BA55-03F33BA8A632</string>
+			<key>IDESourceControlWCCName</key>
+			<string>AutoDesk</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -37,6 +37,7 @@
 		1411215B18C9991A00B15C7B /* TestDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 1411215A18C9991A00B15C7B /* TestDB.sqlite */; };
 		1411215F18C9AF4600B15C7B /* PPSSignatureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1411215E18C9AF4600B15C7B /* PPSSignatureView.m */; };
 		1411216118C9AFD300B15C7B /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1411216018C9AFD300B15C7B /* GLKit.framework */; };
+		A15588C018CCB996006C209D /* MainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A15588BF18CCB996006C209D /* MainTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,8 @@
 		1411215D18C9AF4600B15C7B /* PPSSignatureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSSignatureView.h; sourceTree = "<group>"; };
 		1411215E18C9AF4600B15C7B /* PPSSignatureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSSignatureView.m; sourceTree = "<group>"; };
 		1411216018C9AFD300B15C7B /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		A15588BE18CCB996006C209D /* MainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewCell.h; sourceTree = "<group>"; };
+		A15588BF18CCB996006C209D /* MainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +212,8 @@
 				1411212318C98FFB00B15C7B /* MainViewController.h */,
 				1411212418C98FFB00B15C7B /* MainViewController.m */,
 				1411212518C98FFB00B15C7B /* MainViewController.xib */,
+				A15588BE18CCB996006C209D /* MainTableViewCell.h */,
+				A15588BF18CCB996006C209D /* MainTableViewCell.m */,
 			);
 			path = MainViewController;
 			sourceTree = "<group>";
@@ -364,6 +369,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = YANGRui;
 				TargetAttributes = {
+					141120E918C98F4D00B15C7B = {
+						DevelopmentTeam = WUGL4X3P3K;
+					};
 					1411210418C98F4D00B15C7B = {
 						TestTargetID = 141120E918C98F4D00B15C7B;
 					};
@@ -420,6 +428,7 @@
 				1411215918C9972C00B15C7B /* FMResultSet.m in Sources */,
 				141120FE18C98F4D00B15C7B /* AppDelegate.m in Sources */,
 				1411213018C991C400B15C7B /* ChineseToPinyin.m in Sources */,
+				A15588C018CCB996006C209D /* MainTableViewCell.m in Sources */,
 				1411215818C9972C00B15C7B /* FMDatabaseQueue.m in Sources */,
 				1411215518C9972C00B15C7B /* FMDatabase.m in Sources */,
 				1411213D18C9948900B15C7B /* NSDictionary+JSON.m in Sources */,
@@ -549,6 +558,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lin Zeng (U344YU3QDC)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AutoDesk/AutoDesk-Prefix.pch";
 				INFOPLIST_FILE = "AutoDesk/AutoDesk-Info.plist";
@@ -562,6 +572,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lin Zeng (U344YU3QDC)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AutoDesk/AutoDesk-Prefix.pch";
 				INFOPLIST_FILE = "AutoDesk/AutoDesk-Info.plist";
@@ -631,6 +642,7 @@
 				1411211818C98F4D00B15C7B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1411211918C98F4D00B15C7B /* Build configuration list for PBXNativeTarget "AutoDeskTests" */ = {
 			isa = XCConfigurationList;
@@ -639,6 +651,7 @@
 				1411211B18C98F4D00B15C7B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
