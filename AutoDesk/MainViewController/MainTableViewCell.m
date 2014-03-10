@@ -25,7 +25,7 @@
         self.numberLabel= [[UILabel alloc] initWithFrame:CGRectMake(400, 6, 100, 40)];
         [self.numberLabel setBackgroundColor:[UIColor clearColor]];
         [self.numberLabel setFont:[UIFont boldSystemFontOfSize:24]];
-        
+        [self.numberLabel setTextColor:[UIColor redColor]];
         self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(600, 6, 200, 40)];
         [self.nameLabel setBackgroundColor:[UIColor clearColor]];
         [self.nameLabel setFont:[UIFont systemFontOfSize:20]];
@@ -35,7 +35,7 @@
 
 - (void)initData:(NSDictionary *)dic
 {
-    [self.numberLabel setText:[dic stringAttribute:@"note"]];
+    [self.numberLabel setText:[dic stringAttribute:@"desk"]];
     [self.nameLabel setText:[dic stringAttribute:@"name"]];
 }
 

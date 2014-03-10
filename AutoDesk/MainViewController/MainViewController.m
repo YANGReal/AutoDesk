@@ -46,8 +46,9 @@
     //签名UI
 //    PPSSignatureView *signView = [[PPSSignatureView alloc] initWithFrame:self.view.bounds];
 //    signView.backgroundColor = [UIColor clearColor];
+//    signView.color = GLKColor(100, 23, 100);
 //    [self.view addSubview:signView];
-    
+//    return;
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, DEVICE_HEIGHT, 36)];
     self.searchBar.delegate = self;
     [self.searchBar setSearchBarStyle:UISearchBarStyleDefault];
@@ -76,7 +77,7 @@
         DLog(@"数据库文件已存在");
     }
     
-    NSArray *data = [AppUtility dataFromDB:DOCUMENTS_PATH(@"TestDB.sqlite") withQuery:@"select * from data1"];
+    NSArray *data = [AppUtility dataFromDB:DOCUMENTS_PATH(@"TestDB.sqlite") withQuery:@"select * from data"];
     self.allDataArray = data;
     NSDictionary *colum = data[0];
     //DLog(@"person = %@",[colum stringAttribute:@"pinyin"]);
@@ -87,7 +88,7 @@
         {
             NSString *name = [dict stringAttribute:@"name"];
             NSString *pinyin = [ChineseToPinyin pinyinFromChiniseString:name].lowercaseString;
-            NSString *sql = [NSString stringWithFormat:@"update  data1 set pinyin = '%@' where name = '%@'",pinyin,name];
+            NSString *sql = [NSString stringWithFormat:@"update  data set pinyin = '%@' where name = '%@'",pinyin,name];
             [AppUtility updateDB:DOCUMENTS_PATH(@"TestDB.sqlite") WithSQL:sql];
             
         }
@@ -160,7 +161,7 @@
     self.searchDataArray = [AppUtility dataFromDB:DOCUMENTS_PATH(@"TestDB.sqlite") withQuery:sql];
 
     if (_searchDataArray.count == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"查无此人" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"无搜索结果,请重新搜索" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
         [alertView show];
     }
    else

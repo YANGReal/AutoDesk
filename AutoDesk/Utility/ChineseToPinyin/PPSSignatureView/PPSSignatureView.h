@@ -5,6 +5,7 @@
 
 @property (assign, nonatomic) BOOL hasSignature;
 @property (strong, nonatomic) UIImage *signatureImage;
+@property (assign , nonatomic,readwrite) GLKVector3 color;
 
 - (void)erase;
 

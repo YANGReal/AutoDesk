@@ -25,6 +25,7 @@
 
 #define NAV_HEIGHT 64
 
+#define GLKColor(r,g,b) GLKVector3Make(r/255.0, g/255.0, b/255.0);
 
 #pragma mark -- 定义APP沙盒路径
 /******************************
