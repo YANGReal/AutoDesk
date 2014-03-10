@@ -16,6 +16,10 @@
 		1410A20818CDB0F700965AF7 /* CustomerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1410A20718CDB0F700965AF7 /* CustomerCell.m */; };
 		1410A20A18CDB1B900965AF7 /* CustomerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1410A20918CDB1B900965AF7 /* CustomerCell.xib */; };
 		1410A20C18CDB7E900965AF7 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 1410A20B18CDB7E900965AF7 /* camera.png */; };
+		1410A20E18CDBADE00965AF7 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = 1410A20D18CDBADE00965AF7 /* save.png */; };
+		1410A21018CDBB4500965AF7 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 1410A20F18CDBB4500965AF7 /* setting.png */; };
+		1410A21418CDBE6B00965AF7 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1410A21218CDBE6B00965AF7 /* SettingViewController.m */; };
+		1410A21818CDC46300965AF7 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1410A21718CDC46300965AF7 /* SettingViewController.xib */; };
 		141120EE18C98F4D00B15C7B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141120ED18C98F4D00B15C7B /* Foundation.framework */; };
 		141120F018C98F4D00B15C7B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141120EF18C98F4D00B15C7B /* CoreGraphics.framework */; };
 		141120F218C98F4D00B15C7B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141120F118C98F4D00B15C7B /* UIKit.framework */; };
@@ -76,6 +80,12 @@
 		1410A20718CDB0F700965AF7 /* CustomerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerCell.m; sourceTree = "<group>"; };
 		1410A20918CDB1B900965AF7 /* CustomerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomerCell.xib; sourceTree = "<group>"; };
 		1410A20B18CDB7E900965AF7 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		1410A20D18CDBADE00965AF7 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
+		1410A20F18CDBB4500965AF7 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting.png; sourceTree = "<group>"; };
+		1410A21118CDBE6B00965AF7 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingViewController.h; path = Setting/SettingViewController.h; sourceTree = "<group>"; };
+		1410A21218CDBE6B00965AF7 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingViewController.m; path = Setting/SettingViewController.m; sourceTree = "<group>"; };
+		1410A21318CDBE6B00965AF7 /* SettingViewController_d.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingViewController_d.xib; path = Setting/SettingViewController_d.xib; sourceTree = "<group>"; };
+		1410A21718CDC46300965AF7 /* SettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
 		141120EA18C98F4D00B15C7B /* AutoDesk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoDesk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		141120ED18C98F4D00B15C7B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		141120EF18C98F4D00B15C7B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -162,6 +172,8 @@
 				1410A1F218CD817F00965AF7 /* DetailViewController.m */,
 				1410A1F318CD817F00965AF7 /* DetailViewController.xib */,
 				1410A20B18CDB7E900965AF7 /* camera.png */,
+				1410A20D18CDBADE00965AF7 /* save.png */,
+				1410A20F18CDBB4500965AF7 /* setting.png */,
 			);
 			name = DetailViewController;
 			sourceTree = "<group>";
@@ -188,6 +200,17 @@
 				1410A20918CDB1B900965AF7 /* CustomerCell.xib */,
 			);
 			path = TMQuiltView;
+			sourceTree = "<group>";
+		};
+		1410A21618CDBE6E00965AF7 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				1410A21118CDBE6B00965AF7 /* SettingViewController.h */,
+				1410A21218CDBE6B00965AF7 /* SettingViewController.m */,
+				1410A21318CDBE6B00965AF7 /* SettingViewController_d.xib */,
+				1410A21718CDC46300965AF7 /* SettingViewController.xib */,
+			);
+			name = Setting;
 			sourceTree = "<group>";
 		};
 		141120E118C98F4C00B15C7B = {
@@ -232,6 +255,7 @@
 				1411212218C98FFB00B15C7B /* MainViewController */,
 				1410A1F618CD818400965AF7 /* DetailViewController */,
 				1410A1FE18CD95B900965AF7 /* SignViewController */,
+				1410A21618CDBE6E00965AF7 /* Setting */,
 				141120FF18C98F4D00B15C7B /* Images.xcassets */,
 				141120F418C98F4D00B15C7B /* Supporting Files */,
 			);
@@ -466,11 +490,14 @@
 			files = (
 				1410A20A18CDB1B900965AF7 /* CustomerCell.xib in Resources */,
 				141120F818C98F4D00B15C7B /* InfoPlist.strings in Resources */,
+				1410A20E18CDBADE00965AF7 /* save.png in Resources */,
 				1410A1FD18CD95B500965AF7 /* SignViewController.xib in Resources */,
 				1411212718C98FFB00B15C7B /* MainViewController.xib in Resources */,
 				1410A20C18CDB7E900965AF7 /* camera.png in Resources */,
 				1410A1F518CD817F00965AF7 /* DetailViewController.xib in Resources */,
+				1410A21818CDC46300965AF7 /* SettingViewController.xib in Resources */,
 				1411210018C98F4D00B15C7B /* Images.xcassets in Resources */,
+				1410A21018CDBB4500965AF7 /* setting.png in Resources */,
 				1411215B18C9991A00B15C7B /* TestDB.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -499,6 +526,7 @@
 				1411215918C9972C00B15C7B /* FMResultSet.m in Sources */,
 				141120FE18C98F4D00B15C7B /* AppDelegate.m in Sources */,
 				1411213018C991C400B15C7B /* ChineseToPinyin.m in Sources */,
+				1410A21418CDBE6B00965AF7 /* SettingViewController.m in Sources */,
 				A15588C018CCB996006C209D /* MainTableViewCell.m in Sources */,
 				1411215818C9972C00B15C7B /* FMDatabaseQueue.m in Sources */,
 				1410A20818CDB0F700965AF7 /* CustomerCell.m in Sources */,

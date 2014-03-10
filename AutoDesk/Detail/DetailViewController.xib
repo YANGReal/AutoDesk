@@ -39,13 +39,23 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vjR-4l-aqg">
-                    <rect key="frame" x="54" y="271" width="46" height="48"/>
+                    <rect key="frame" x="54" y="281" width="46" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="保存">
+                    <state key="normal" backgroundImage="save.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="takePhoto:" destination="-1" eventType="touchUpInside" id="HBs-DG-lDA"/>
+                        <action selector="save:" destination="-1" eventType="touchUpInside" id="WZ3-00-OGa"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PhB-6g-qgr">
+                    <rect key="frame" x="50" y="554" width="50" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" backgroundImage="setting.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="setting:" destination="-1" eventType="touchUpInside" id="yf3-f9-Vi2"/>
                     </connections>
                 </button>
             </subviews>
@@ -56,5 +66,7 @@
     </objects>
     <resources>
         <image name="camera.png" width="512" height="512"/>
+        <image name="save.png" width="128" height="128"/>
+        <image name="setting.png" width="256" height="256"/>
     </resources>
 </document>

@@ -8,12 +8,14 @@
 
 #import "DetailViewController.h"
 #import "SignViewController.h"
-@interface DetailViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,SignViewControllerDelegate>
+#import "SettingViewController.h"
+@interface DetailViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,SignViewControllerDelegate,UIAlertViewDelegate>
 @property (weak , nonatomic) IBOutlet UILabel *label;
 @property (weak , nonatomic) IBOutlet UIImageView *imgView;
 
+- (IBAction)save:(id)sender;
 - (IBAction)takePhoto:(id)sender;
-
+- (IBAction)setting:(id)sender;
 @end
 
 @implementation DetailViewController
@@ -47,6 +49,45 @@
     picker.cameraDevice = UIImagePickerControllerCameraDeviceRear;
     [self presentViewController:picker animated:YES completion:nil];
 }
+
+
+- (IBAction)save:(id)sender
+{
+    if (self.imgView.image == nil)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还未拍照" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您要参加抽奖吗" delegate:self cancelButtonTitle:@"不参加" otherButtonTitles:@"参加", nil];
+    [alert show];
+    
+}
+
+- (IBAction)setting:(id)sender
+{
+    SettingViewController *settingVC = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
+    [self.navigationController pushViewController:settingVC animated:YES];
+}
+
+
+#pragma mark -UIAlertView delegate method
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *fileName = nil;
+    NSData *data = UIImagePNGRepresentation(self.imgView.image);
+    if (buttonIndex == 0)
+    {
+       fileName = [NSString stringWithFormat:@"N_%@.png",[_data stringAttribute:@"name"]];
+    }
+    else
+    {
+        fileName = [NSString stringWithFormat:@"%@.png",[_data stringAttribute:@"name"]];
+    }
+    [data writeToFile:DOCUMENTS_PATH(fileName) atomically:YES];
+}
+
 
 #pragma mark - UIImagePickerControllerDelegate method
 
