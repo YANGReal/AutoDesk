@@ -9,10 +9,12 @@
 #import "MainViewController.h"
 #import "MainTableViewCell.h"
 #import "DetailViewController.h"
-@interface MainViewController () <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+#import "TMQuiltView.h"
+#import "CustomerCell.h"
+@interface MainViewController () <UISearchBarDelegate, UIAlertViewDelegate,TMQuiltViewDataSource,TMQuiltViewDelegate>
 
 @property (nonatomic, strong) UISearchBar *searchBar;
-@property (nonatomic, strong) UITableView *mainTableView;
+@property (nonatomic, strong) TMQuiltView *mainTableView;
 @property (nonatomic, strong) NSArray *allDataArray;
 @property (nonatomic, strong) NSArray *searchDataArray;
 @property (nonatomic, assign) NSInteger currentMaxDisplayedCell;
@@ -61,16 +63,17 @@
     
     [self.view addSubview:_searchBar];
     
-    self.countLabel = [[UILabel alloc] initWithFrame:RECT(100, 0, 400, 50)];
-    self.countLabel.textColor = [UIColor redColor];
-    self.countLabel.font = [UIFont boldSystemFontOfSize:20];
+//    self.countLabel = [[UILabel alloc] initWithFrame:RECT(100, 0, 400, 50)];
+//    //self.countLabel.textColor = [UIColor redColor];
+//    self.countLabel.font = [UIFont boldSystemFontOfSize:20];
 
     
-    self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 100, DEVICE_HEIGHT, DEVICE_WIDTH - 100) style:UITableViewStylePlain];
+    self.mainTableView = [[TMQuiltView alloc] initWithFrame:CGRectMake(0, 100, 1024, DEVICE_WIDTH - 100)];
     [self.mainTableView setDelegate:self];
     [self.mainTableView setDataSource:self];
-    self.mainTableView.tableHeaderView = self.countLabel;
+    //self.mainTableView.backgroundColor = [UIColor redColor];
     [self.view addSubview:_mainTableView];
+    [self.mainTableView reloadData];
     
     
 }
@@ -93,7 +96,6 @@
     NSArray *data = [AppUtility dataFromDB:DOCUMENTS_PATH(@"TestDB.sqlite") withQuery:@"select * from data"];
     self.allDataArray = data;
     NSDictionary *colum = data[0];
-    //DLog(@"person = %@",[colum stringAttribute:@"pinyin"]);
     NSString *pinyin  = [colum stringAttribute:@"pinyin"];
     if (pinyin.length == 0)
     {
@@ -105,64 +107,66 @@
             [AppUtility updateDB:DOCUMENTS_PATH(@"TestDB.sqlite") WithSQL:sql];
         }
     }
+    DLog(@"data = %@",data);
 }
 
 #pragma mark *****UITableViewDelegate*****
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+
+- (NSInteger)quiltViewNumberOfCells:(TMQuiltView *)TMQuiltView
 {
     if (_searchDataArray.count == 0)
     {
-        self.countLabel.text = [NSString stringWithFormat:@"总计:%d人",_allDataArray.count];
+       // self.countLabel.text = [NSString stringWithFormat:@"总计:%d人",_allDataArray.count];
         return _allDataArray.count;
     }
     else
     {
-        self.countLabel.text = [NSString stringWithFormat:@"找到:%d人",_searchDataArray.count];
+       // self.countLabel.text = [NSString stringWithFormat:@"找到:%d人",_searchDataArray.count];
         return _searchDataArray.count;
     }
-    
+
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (NSInteger)quiltViewNumberOfColumns:(TMQuiltView *)quiltView
 {
-    return 50;
+    return 4;
 }
 
-- (MainTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (CGFloat)quiltView:(TMQuiltView *)quiltView heightForCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 111.0;
+}
+
+- (CGFloat)quiltViewMargin:(TMQuiltView *)quilView marginType:(TMQuiltViewMarginType)marginType
+{
+    return 20;
+}
+
+
+- (TMQuiltViewCell *)quiltView:(TMQuiltView *)quiltView cellAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *identifier = @"cell";
-    
-    MainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (cell == nil) {
-        cell = [[MainTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    CustomerCell *cell = (CustomerCell *)[quiltView dequeueReusableCellWithReuseIdentifier:identifier];
+    if (cell == nil)
+    {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomerCell" owner:self options:nil] lastObject];
     }
     if (_searchDataArray.count == 0) {
-        [cell initData:_allDataArray[indexPath.row]];
+        cell.data = _allDataArray[indexPath.row];
     }
     else
     {
-        [cell initData:_searchDataArray[indexPath.row]];
+        cell.data = _searchDataArray[indexPath.row];
     }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (_currentMaxDisplayedCell == 0) {
-        self.currentMaxDisplayedCell = -1;
-    }
-    
-    if (indexPath.row > _currentMaxDisplayedCell) {
-        
-        [(MainTableViewCell *)cell setupCell];
-        self.currentMaxDisplayedCell = indexPath.row;
-        
-    }
-}
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (void)quiltView:(TMQuiltView *)quiltView didSelectCellAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *data;
     if (self.searchDataArray.count == 0)
@@ -173,10 +177,11 @@
     {
         data = _searchDataArray[indexPath.row];
     }
-        
+
     DetailViewController *detailVC = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
     detailVC.data = data;
     [self.navigationController pushViewController:detailVC animated:YES];
+
 }
 
 

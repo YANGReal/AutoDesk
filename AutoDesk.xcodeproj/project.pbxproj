@@ -11,6 +11,11 @@
 		1410A1F518CD817F00965AF7 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1410A1F318CD817F00965AF7 /* DetailViewController.xib */; };
 		1410A1FC18CD95B500965AF7 /* SignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1410A1FA18CD95B500965AF7 /* SignViewController.m */; };
 		1410A1FD18CD95B500965AF7 /* SignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1410A1FB18CD95B500965AF7 /* SignViewController.xib */; };
+		1410A20418CDB02D00965AF7 /* TMQuiltView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1410A20118CDB02D00965AF7 /* TMQuiltView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1410A20518CDB02D00965AF7 /* TMQuiltViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1410A20318CDB02D00965AF7 /* TMQuiltViewCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1410A20818CDB0F700965AF7 /* CustomerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1410A20718CDB0F700965AF7 /* CustomerCell.m */; };
+		1410A20A18CDB1B900965AF7 /* CustomerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1410A20918CDB1B900965AF7 /* CustomerCell.xib */; };
+		1410A20C18CDB7E900965AF7 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 1410A20B18CDB7E900965AF7 /* camera.png */; };
 		141120EE18C98F4D00B15C7B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141120ED18C98F4D00B15C7B /* Foundation.framework */; };
 		141120F018C98F4D00B15C7B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141120EF18C98F4D00B15C7B /* CoreGraphics.framework */; };
 		141120F218C98F4D00B15C7B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141120F118C98F4D00B15C7B /* UIKit.framework */; };
@@ -63,6 +68,14 @@
 		1410A1F918CD95B500965AF7 /* SignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignViewController.h; path = Sign/SignViewController.h; sourceTree = "<group>"; };
 		1410A1FA18CD95B500965AF7 /* SignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignViewController.m; path = Sign/SignViewController.m; sourceTree = "<group>"; };
 		1410A1FB18CD95B500965AF7 /* SignViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SignViewController.xib; path = Sign/SignViewController.xib; sourceTree = "<group>"; };
+		1410A20018CDB02D00965AF7 /* TMQuiltView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMQuiltView.h; sourceTree = "<group>"; };
+		1410A20118CDB02D00965AF7 /* TMQuiltView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMQuiltView.m; sourceTree = "<group>"; };
+		1410A20218CDB02D00965AF7 /* TMQuiltViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMQuiltViewCell.h; sourceTree = "<group>"; };
+		1410A20318CDB02D00965AF7 /* TMQuiltViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMQuiltViewCell.m; sourceTree = "<group>"; };
+		1410A20618CDB0F700965AF7 /* CustomerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerCell.h; sourceTree = "<group>"; };
+		1410A20718CDB0F700965AF7 /* CustomerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerCell.m; sourceTree = "<group>"; };
+		1410A20918CDB1B900965AF7 /* CustomerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomerCell.xib; sourceTree = "<group>"; };
+		1410A20B18CDB7E900965AF7 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		141120EA18C98F4D00B15C7B /* AutoDesk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoDesk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		141120ED18C98F4D00B15C7B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		141120EF18C98F4D00B15C7B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -148,6 +161,7 @@
 				1410A1F118CD817F00965AF7 /* DetailViewController.h */,
 				1410A1F218CD817F00965AF7 /* DetailViewController.m */,
 				1410A1F318CD817F00965AF7 /* DetailViewController.xib */,
+				1410A20B18CDB7E900965AF7 /* camera.png */,
 			);
 			name = DetailViewController;
 			sourceTree = "<group>";
@@ -160,6 +174,20 @@
 				1410A1FB18CD95B500965AF7 /* SignViewController.xib */,
 			);
 			name = SignViewController;
+			sourceTree = "<group>";
+		};
+		1410A1FF18CDB02D00965AF7 /* TMQuiltView */ = {
+			isa = PBXGroup;
+			children = (
+				1410A20018CDB02D00965AF7 /* TMQuiltView.h */,
+				1410A20118CDB02D00965AF7 /* TMQuiltView.m */,
+				1410A20218CDB02D00965AF7 /* TMQuiltViewCell.h */,
+				1410A20318CDB02D00965AF7 /* TMQuiltViewCell.m */,
+				1410A20618CDB0F700965AF7 /* CustomerCell.h */,
+				1410A20718CDB0F700965AF7 /* CustomerCell.m */,
+				1410A20918CDB1B900965AF7 /* CustomerCell.xib */,
+			);
+			path = TMQuiltView;
 			sourceTree = "<group>";
 		};
 		141120E118C98F4C00B15C7B = {
@@ -255,6 +283,7 @@
 		1411212818C9913100B15C7B /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				1410A1FF18CDB02D00965AF7 /* TMQuiltView */,
 				1411213118C992FA00B15C7B /* Global.h */,
 				1411214A18C9972C00B15C7B /* FMDB */,
 				1411213618C9944E00B15C7B /* AppUtility */,
@@ -435,9 +464,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1410A20A18CDB1B900965AF7 /* CustomerCell.xib in Resources */,
 				141120F818C98F4D00B15C7B /* InfoPlist.strings in Resources */,
 				1410A1FD18CD95B500965AF7 /* SignViewController.xib in Resources */,
 				1411212718C98FFB00B15C7B /* MainViewController.xib in Resources */,
+				1410A20C18CDB7E900965AF7 /* camera.png in Resources */,
 				1410A1F518CD817F00965AF7 /* DetailViewController.xib in Resources */,
 				1411210018C98F4D00B15C7B /* Images.xcassets in Resources */,
 				1411215B18C9991A00B15C7B /* TestDB.sqlite in Resources */,
@@ -462,12 +493,15 @@
 				1411214918C994BD00B15C7B /* UIView+ModifyFrame.m in Sources */,
 				1411215F18C9AF4600B15C7B /* PPSSignatureView.m in Sources */,
 				1410A1F418CD817F00965AF7 /* DetailViewController.m in Sources */,
+				1410A20518CDB02D00965AF7 /* TMQuiltViewCell.m in Sources */,
+				1410A20418CDB02D00965AF7 /* TMQuiltView.m in Sources */,
 				1411215718C9972C00B15C7B /* FMDatabasePool.m in Sources */,
 				1411215918C9972C00B15C7B /* FMResultSet.m in Sources */,
 				141120FE18C98F4D00B15C7B /* AppDelegate.m in Sources */,
 				1411213018C991C400B15C7B /* ChineseToPinyin.m in Sources */,
 				A15588C018CCB996006C209D /* MainTableViewCell.m in Sources */,
 				1411215818C9972C00B15C7B /* FMDatabaseQueue.m in Sources */,
+				1410A20818CDB0F700965AF7 /* CustomerCell.m in Sources */,
 				1411215518C9972C00B15C7B /* FMDatabase.m in Sources */,
 				1411213D18C9948900B15C7B /* NSDictionary+JSON.m in Sources */,
 				1411213918C9944E00B15C7B /* AppUtility.m in Sources */,
