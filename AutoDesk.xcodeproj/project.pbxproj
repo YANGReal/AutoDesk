@@ -47,9 +47,11 @@
 		1411215718C9972C00B15C7B /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1411215018C9972C00B15C7B /* FMDatabasePool.m */; };
 		1411215818C9972C00B15C7B /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1411215218C9972C00B15C7B /* FMDatabaseQueue.m */; };
 		1411215918C9972C00B15C7B /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1411215418C9972C00B15C7B /* FMResultSet.m */; };
-		1411215B18C9991A00B15C7B /* TestDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 1411215A18C9991A00B15C7B /* TestDB.sqlite */; };
 		1411215F18C9AF4600B15C7B /* PPSSignatureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1411215E18C9AF4600B15C7B /* PPSSignatureView.m */; };
 		1411216118C9AFD300B15C7B /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1411216018C9AFD300B15C7B /* GLKit.framework */; };
+		6E217C9218CDEB62000250B7 /* YRDragLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E217C9118CDEB62000250B7 /* YRDragLabel.m */; };
+		6E217C9518CDFAC8000250B7 /* TestDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 6E217C9418CDFAC8000250B7 /* TestDB.sqlite */; };
+		6E217C9818CDFB39000250B7 /* YRDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E217C9718CDFB39000250B7 /* YRDragView.m */; };
 		A15588C018CCB996006C209D /* MainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A15588BF18CCB996006C209D /* MainTableViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -84,7 +86,6 @@
 		1410A20F18CDBB4500965AF7 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting.png; sourceTree = "<group>"; };
 		1410A21118CDBE6B00965AF7 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingViewController.h; path = Setting/SettingViewController.h; sourceTree = "<group>"; };
 		1410A21218CDBE6B00965AF7 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingViewController.m; path = Setting/SettingViewController.m; sourceTree = "<group>"; };
-		1410A21318CDBE6B00965AF7 /* SettingViewController_d.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingViewController_d.xib; path = Setting/SettingViewController_d.xib; sourceTree = "<group>"; };
 		1410A21718CDC46300965AF7 /* SettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
 		141120EA18C98F4D00B15C7B /* AutoDesk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoDesk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		141120ED18C98F4D00B15C7B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -130,10 +131,14 @@
 		1411215218C9972C00B15C7B /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
 		1411215318C9972C00B15C7B /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		1411215418C9972C00B15C7B /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		1411215A18C9991A00B15C7B /* TestDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestDB.sqlite; sourceTree = "<group>"; };
 		1411215D18C9AF4600B15C7B /* PPSSignatureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSSignatureView.h; sourceTree = "<group>"; };
 		1411215E18C9AF4600B15C7B /* PPSSignatureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSSignatureView.m; sourceTree = "<group>"; };
 		1411216018C9AFD300B15C7B /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		6E217C9018CDEB62000250B7 /* YRDragLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YRDragLabel.h; path = AutoDesk/YRDragLabel.h; sourceTree = "<group>"; };
+		6E217C9118CDEB62000250B7 /* YRDragLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YRDragLabel.m; path = AutoDesk/YRDragLabel.m; sourceTree = "<group>"; };
+		6E217C9418CDFAC8000250B7 /* TestDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestDB.sqlite; sourceTree = "<group>"; };
+		6E217C9618CDFB39000250B7 /* YRDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRDragView.h; sourceTree = "<group>"; };
+		6E217C9718CDFB39000250B7 /* YRDragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRDragView.m; sourceTree = "<group>"; };
 		A15588BE18CCB996006C209D /* MainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewCell.h; sourceTree = "<group>"; };
 		A15588BF18CCB996006C209D /* MainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -207,7 +212,6 @@
 			children = (
 				1410A21118CDBE6B00965AF7 /* SettingViewController.h */,
 				1410A21218CDBE6B00965AF7 /* SettingViewController.m */,
-				1410A21318CDBE6B00965AF7 /* SettingViewController_d.xib */,
 				1410A21718CDC46300965AF7 /* SettingViewController.xib */,
 			);
 			name = Setting;
@@ -269,7 +273,7 @@
 				141120F618C98F4D00B15C7B /* InfoPlist.strings */,
 				141120F918C98F4D00B15C7B /* main.m */,
 				141120FB18C98F4D00B15C7B /* AutoDesk-Prefix.pch */,
-				1411215A18C9991A00B15C7B /* TestDB.sqlite */,
+				6E217C9418CDFAC8000250B7 /* TestDB.sqlite */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -317,6 +321,8 @@
 				1411213A18C9948900B15C7B /* NSDictionary+JSON */,
 				1411215C18C9AF4600B15C7B /* PPSSignatureView */,
 				1411212D18C991C400B15C7B /* ChineseToPinyin */,
+				6E217C9318CDED15000250B7 /* YRDragLabel */,
+				6E217C9918CDFB3E000250B7 /* YRDragView */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -409,6 +415,24 @@
 			path = AutoDesk/Utility/ChineseToPinyin/PPSSignatureView;
 			sourceTree = "<group>";
 		};
+		6E217C9318CDED15000250B7 /* YRDragLabel */ = {
+			isa = PBXGroup;
+			children = (
+				6E217C9018CDEB62000250B7 /* YRDragLabel.h */,
+				6E217C9118CDEB62000250B7 /* YRDragLabel.m */,
+			);
+			name = YRDragLabel;
+			sourceTree = "<group>";
+		};
+		6E217C9918CDFB3E000250B7 /* YRDragView */ = {
+			isa = PBXGroup;
+			children = (
+				6E217C9618CDFB39000250B7 /* YRDragView.h */,
+				6E217C9718CDFB39000250B7 /* YRDragView.m */,
+			);
+			name = YRDragView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -493,12 +517,12 @@
 				1410A20E18CDBADE00965AF7 /* save.png in Resources */,
 				1410A1FD18CD95B500965AF7 /* SignViewController.xib in Resources */,
 				1411212718C98FFB00B15C7B /* MainViewController.xib in Resources */,
+				6E217C9518CDFAC8000250B7 /* TestDB.sqlite in Resources */,
 				1410A20C18CDB7E900965AF7 /* camera.png in Resources */,
 				1410A1F518CD817F00965AF7 /* DetailViewController.xib in Resources */,
 				1410A21818CDC46300965AF7 /* SettingViewController.xib in Resources */,
 				1411210018C98F4D00B15C7B /* Images.xcassets in Resources */,
 				1410A21018CDBB4500965AF7 /* setting.png in Resources */,
-				1411215B18C9991A00B15C7B /* TestDB.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,6 +560,8 @@
 				1411214718C994BD00B15C7B /* UIColor+HexString.m in Sources */,
 				1410A1FC18CD95B500965AF7 /* SignViewController.m in Sources */,
 				1411215618C9972C00B15C7B /* FMDatabaseAdditions.m in Sources */,
+				6E217C9818CDFB39000250B7 /* YRDragView.m in Sources */,
+				6E217C9218CDEB62000250B7 /* YRDragLabel.m in Sources */,
 				1411212618C98FFB00B15C7B /* MainViewController.m in Sources */,
 				1411214818C994BD00B15C7B /* UIImage+Loader.m in Sources */,
 				141120FA18C98F4D00B15C7B /* main.m in Sources */,

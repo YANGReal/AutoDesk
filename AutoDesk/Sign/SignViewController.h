@@ -19,4 +19,5 @@
 @interface SignViewController : UIViewController
 @property (strong , nonatomic) UIImage *image;
 @property (assign , nonatomic) id<SignViewControllerDelegate>delegate;
+@property (copy ,nonatomic) NSString *name;
 @end

@@ -1,7 +1,7 @@
 #import "PPSSignatureView.h"
 
-#define             STROKE_WIDTH_MIN 0.002 // Stroke width determined by touch velocity
-#define             STROKE_WIDTH_MAX 0.010
+#define             STROKE_WIDTH_MIN 0.002 // 0.002 Stroke width determined by touch velocity
+#define             STROKE_WIDTH_MAX 0.01 //0.01
 #define       STROKE_WIDTH_SMOOTHING 0.5   // Low pass filter alpha
 
 #define           VELOCITY_CLAMP_MIN 20
@@ -120,6 +120,10 @@ static PPSSignaturePoint ViewPointToGL(CGPoint viewPoint, CGRect bounds, GLKVect
     if (context) {
         time(NULL);
         //DLog(@"self.color = (%f,%f,%f)",self.strokeColor.r,self.strokeColor.g,self.strokeColor.b);
+        if (self.fontWidth == 0)
+        {
+            self.fontWidth = STROKE_WIDTH_MAX*1.0;
+        }
         self.context = context;
         self.drawableDepthFormat = GLKViewDrawableDepthFormat24;
 		self.enableSetNeedsDisplay = YES;
@@ -280,7 +284,7 @@ static PPSSignaturePoint ViewPointToGL(CGPoint viewPoint, CGRect bounds, GLKVect
     float normalizedVelocity = (clampedVelocityMagnitude - VELOCITY_CLAMP_MIN) / (VELOCITY_CLAMP_MAX - VELOCITY_CLAMP_MIN);
     
     float lowPassFilterAlpha = STROKE_WIDTH_SMOOTHING;
-    float newThickness = (STROKE_WIDTH_MAX - STROKE_WIDTH_MIN) * normalizedVelocity + STROKE_WIDTH_MIN;
+    float newThickness = (_fontWidth*0.01 - STROKE_WIDTH_MIN) * normalizedVelocity + STROKE_WIDTH_MIN;
     penThickness = penThickness * lowPassFilterAlpha + newThickness * (1 - lowPassFilterAlpha);
     
     if ([p state] == UIGestureRecognizerStateBegan) {

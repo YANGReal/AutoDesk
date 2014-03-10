@@ -27,6 +27,14 @@
     return self;
 }
 
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.layer.cornerRadius = 10.0;
+    self.layer.masksToBounds=  YES;
+}
+
+
 - (void)layoutSubviews
 {
     self.nameLabel.text = [_data stringAttribute:@"name"];

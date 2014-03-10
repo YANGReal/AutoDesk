@@ -21,7 +21,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = @"签名";
+        self.title = @"请在屏幕空白处签名";
     }
     return self;
 }
@@ -39,12 +39,33 @@
 - (void)setupViews
 {
     
-    self.imgView.image = self.image;
-    self.imgView2 = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    self.imgView2.contentMode = UIViewContentModeScaleAspectFit;
-    [self.view addSubview:self.imgView2];
+    //self.imgView.image = self.image;
+    //self.imgView2 = [[UIImageView alloc] initWithFrame:self.view.bounds];
+   // self.imgView2.contentMode = UIViewContentModeScaleAspectFit;
+    //[self.view addSubview:self.imgView2];
     self.signView = [[PPSSignatureView alloc] initWithFrame:self.view.bounds];
-    self.signView.color = GLKColor(255 , 255, 255);
+    NSDictionary *colorDict = [AppUtility getObjectForKey:@"color"];
+    if (colorDict == nil)
+    {
+         self.signView.color = GLKColor(0, 0, 0);
+    }
+    else
+    {
+        int red = [colorDict stringAttribute:@"red"].intValue;
+        int green = [colorDict stringAttribute:@"green"].intValue;
+        int blue = [colorDict stringAttribute:@"blue"].intValue;
+        self.signView.color = GLKColor(red , green, blue);
+    }
+    NSString *fontWidth = [AppUtility getObjectForKey:@"font"];
+    if (fontWidth == nil)
+    {
+        self.signView.fontWidth = 1;
+    }
+    else
+    {
+        self.signView.fontWidth = fontWidth.intValue;
+    }
+    //self.signView.color = GLKColor(255 , 255, 255);
     self.signView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.signView];
     //[self.view.layer addSublayer:self.signView.layer];
@@ -63,23 +84,10 @@
     [super viewWillDisappear:animated];
     if ([self.signView hasSignature])
     {
-        self.imgView2.image = self.signView.signatureImage;
-        UIImage *img = [UIImage imageFromView:self.view];
-        if ([self.delegate respondsToSelector:@selector(passSignImage:)])
-        {
-            [self.delegate passSignImage:img];
-        }
-    }
-    else
-    {
-        if ([self.delegate respondsToSelector:@selector(passSignImage:)])
-        {
-            
-            {
-                [self.delegate passSignImage:self.image];
-            }
-        }
-
+        UIImage *img = [self.signView signatureImage];
+        NSData *data = UIImagePNGRepresentation(img);
+        NSString *fileName = [NSString stringWithFormat:@"sign_%@_.png",_name];
+        [data writeToFile:DOCUMENTS_PATH(fileName) atomically:YES];
     }
     
 }
