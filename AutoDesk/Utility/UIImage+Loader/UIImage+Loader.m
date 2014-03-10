@@ -144,6 +144,17 @@
     return image;
 }
 
+
++ (UIImage *)imageFromView:(UIView *)view
+{
+    UIGraphicsBeginImageContext(view.frame.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [view.layer renderInContext:context];
+    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return theImage;
+}
+
 /*
 +(UIImage *)getImage:(NSURL *)videoURL
 {

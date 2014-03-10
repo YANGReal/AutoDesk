@@ -8,7 +8,7 @@
 
 #import "MainViewController.h"
 #import "MainTableViewCell.h"
-
+#import "DetailViewController.h"
 @interface MainViewController () <UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSArray *allDataArray;
 @property (nonatomic, strong) NSArray *searchDataArray;
 @property (nonatomic, assign) NSInteger currentMaxDisplayedCell;
+@property (nonatomic, strong) UILabel *countLabel;
 
 @end
 
@@ -26,7 +27,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = @"AutoDesk";
+        self.title = @"找座位";
         self.currentMaxDisplayedCell = 0;
         self.searchDataArray = [[NSArray alloc] init];
     }
@@ -49,17 +50,29 @@
 //    signView.color = GLKColor(100, 23, 100);
 //    [self.view addSubview:signView];
 //    return;
+    
+    //countLabel.text
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, DEVICE_HEIGHT, 36)];
     self.searchBar.delegate = self;
     [self.searchBar setSearchBarStyle:UISearchBarStyleDefault];
     [self.searchBar setPlaceholder:@"请输入拼音首字母搜索"];
     [self.searchBar setTranslucent:NO];
+    [self.searchBar setShowsCancelButton:YES];
+    
     [self.view addSubview:_searchBar];
+    
+    self.countLabel = [[UILabel alloc] initWithFrame:RECT(100, 0, 400, 50)];
+    self.countLabel.textColor = [UIColor redColor];
+    self.countLabel.font = [UIFont boldSystemFontOfSize:20];
+
     
     self.mainTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 100, DEVICE_HEIGHT, DEVICE_WIDTH - 100) style:UITableViewStylePlain];
     [self.mainTableView setDelegate:self];
     [self.mainTableView setDataSource:self];
+    self.mainTableView.tableHeaderView = self.countLabel;
     [self.view addSubview:_mainTableView];
+    
+    
 }
 
 
@@ -90,21 +103,25 @@
             NSString *pinyin = [ChineseToPinyin pinyinFromChiniseString:name].lowercaseString;
             NSString *sql = [NSString stringWithFormat:@"update  data set pinyin = '%@' where name = '%@'",pinyin,name];
             [AppUtility updateDB:DOCUMENTS_PATH(@"TestDB.sqlite") WithSQL:sql];
-            
         }
     }
-    DLog(@"data = %@",data);
 }
 
 #pragma mark *****UITableViewDelegate*****
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_searchDataArray.count == 0) {
+    if (_searchDataArray.count == 0)
+    {
+        self.countLabel.text = [NSString stringWithFormat:@"总计:%d人",_allDataArray.count];
         return _allDataArray.count;
     }
     else
+    {
+        self.countLabel.text = [NSString stringWithFormat:@"找到:%d人",_searchDataArray.count];
         return _searchDataArray.count;
+    }
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -127,7 +144,7 @@
     {
         [cell initData:_searchDataArray[indexPath.row]];
     }
-    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
@@ -145,6 +162,24 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *data;
+    if (self.searchDataArray.count == 0)
+    {
+        data = _allDataArray[indexPath.row];
+    }
+    else
+    {
+        data = _searchDataArray[indexPath.row];
+    }
+        
+    DetailViewController *detailVC = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
+    detailVC.data = data;
+    [self.navigationController pushViewController:detailVC animated:YES];
+}
+
+
 #pragma mark *****UISearchBarDelegate*****
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -157,7 +192,7 @@
     
     NSString *wildcard = [NSString stringWithFormat:@"%@%%", string];
 
-    NSString *sql = [NSString stringWithFormat:@"select * from data1 where pinyin like '%@'", wildcard];
+    NSString *sql = [NSString stringWithFormat:@"select * from data where pinyin like '%@'", wildcard];
     self.searchDataArray = [AppUtility dataFromDB:DOCUMENTS_PATH(@"TestDB.sqlite") withQuery:sql];
 
     if (_searchDataArray.count == 0) {
@@ -168,7 +203,34 @@
    {
     [self.mainTableView reloadData];
    }
+    [searchBar resignFirstResponder];
 }
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    //searchBar.showsCancelButton = YES;
+    for(UIView *cancelBtn in [searchBar subviews])
+    {
+        DLog(@"cancelBtn = %@",cancelBtn);
+        if([cancelBtn isKindOfClass:[UIButton class]])
+        {
+            UIButton *btn = (UIButton *)cancelBtn;
+            [btn setTitle:@"取消" forState:UIControlStateNormal];
+        }
+    }
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    if (_searchDataArray.count != 0)
+    {
+        self.searchDataArray = nil;
+        [self.mainTableView reloadData];
+    }
+    [searchBar resignFirstResponder];
+}
+
+#pragma mark -UIAlertViewDelegate method
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

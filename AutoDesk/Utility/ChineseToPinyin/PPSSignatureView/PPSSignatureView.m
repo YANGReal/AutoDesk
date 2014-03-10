@@ -177,7 +177,8 @@ static PPSSignaturePoint ViewPointToGL(CGPoint viewPoint, CGRect bounds, GLKVect
 
 - (void)drawRect:(CGRect)rect
 {
-    glClearColor(1, 1, 1, 1.0f);
+    glClearColor(0.0, 0.0, 0.0, 0.0f);
+    //[UIColor clearColor];
     glClear(GL_COLOR_BUFFER_BIT);
 
     [effect prepareToDraw];

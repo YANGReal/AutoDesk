@@ -61,6 +61,9 @@
 
 //+ (UIImage *)getImage:(NSURL *)videoURL;
 
++ (UIImage *)imageFromView:(UIView *)view;
+
+
 #pragma mark - 把图片分割成两半
 + (NSArray *)splitImageIntoTwoParts:(UIImage *)image;
 

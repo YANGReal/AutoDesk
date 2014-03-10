@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1410A1F418CD817F00965AF7 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1410A1F218CD817F00965AF7 /* DetailViewController.m */; };
+		1410A1F518CD817F00965AF7 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1410A1F318CD817F00965AF7 /* DetailViewController.xib */; };
+		1410A1FC18CD95B500965AF7 /* SignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1410A1FA18CD95B500965AF7 /* SignViewController.m */; };
+		1410A1FD18CD95B500965AF7 /* SignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1410A1FB18CD95B500965AF7 /* SignViewController.xib */; };
 		141120EE18C98F4D00B15C7B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141120ED18C98F4D00B15C7B /* Foundation.framework */; };
 		141120F018C98F4D00B15C7B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141120EF18C98F4D00B15C7B /* CoreGraphics.framework */; };
 		141120F218C98F4D00B15C7B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141120F118C98F4D00B15C7B /* UIKit.framework */; };
@@ -51,6 +55,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1410A1F118CD817F00965AF7 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailViewController.h; path = Detail/DetailViewController.h; sourceTree = "<group>"; };
+		1410A1F218CD817F00965AF7 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailViewController.m; path = Detail/DetailViewController.m; sourceTree = "<group>"; };
+		1410A1F318CD817F00965AF7 /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetailViewController.xib; path = Detail/DetailViewController.xib; sourceTree = "<group>"; };
+		1410A1F718CD952400965AF7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		1410A1F818CD952400965AF7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		1410A1F918CD95B500965AF7 /* SignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignViewController.h; path = Sign/SignViewController.h; sourceTree = "<group>"; };
+		1410A1FA18CD95B500965AF7 /* SignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignViewController.m; path = Sign/SignViewController.m; sourceTree = "<group>"; };
+		1410A1FB18CD95B500965AF7 /* SignViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SignViewController.xib; path = Sign/SignViewController.xib; sourceTree = "<group>"; };
 		141120EA18C98F4D00B15C7B /* AutoDesk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoDesk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		141120ED18C98F4D00B15C7B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		141120EF18C98F4D00B15C7B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -130,6 +142,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1410A1F618CD818400965AF7 /* DetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1410A1F118CD817F00965AF7 /* DetailViewController.h */,
+				1410A1F218CD817F00965AF7 /* DetailViewController.m */,
+				1410A1F318CD817F00965AF7 /* DetailViewController.xib */,
+			);
+			name = DetailViewController;
+			sourceTree = "<group>";
+		};
+		1410A1FE18CD95B900965AF7 /* SignViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1410A1F918CD95B500965AF7 /* SignViewController.h */,
+				1410A1FA18CD95B500965AF7 /* SignViewController.m */,
+				1410A1FB18CD95B500965AF7 /* SignViewController.xib */,
+			);
+			name = SignViewController;
+			sourceTree = "<group>";
+		};
 		141120E118C98F4C00B15C7B = {
 			isa = PBXGroup;
 			children = (
@@ -170,6 +202,8 @@
 				141120FC18C98F4D00B15C7B /* AppDelegate.h */,
 				141120FD18C98F4D00B15C7B /* AppDelegate.m */,
 				1411212218C98FFB00B15C7B /* MainViewController */,
+				1410A1F618CD818400965AF7 /* DetailViewController */,
+				1410A1FE18CD95B900965AF7 /* SignViewController */,
 				141120FF18C98F4D00B15C7B /* Images.xcassets */,
 				141120F418C98F4D00B15C7B /* Supporting Files */,
 			);
@@ -370,7 +404,7 @@
 				ORGANIZATIONNAME = YANGRui;
 				TargetAttributes = {
 					141120E918C98F4D00B15C7B = {
-						DevelopmentTeam = WUGL4X3P3K;
+						DevelopmentTeam = 2427JA2MB5;
 					};
 					1411210418C98F4D00B15C7B = {
 						TestTargetID = 141120E918C98F4D00B15C7B;
@@ -383,6 +417,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = 141120E118C98F4C00B15C7B;
 			productRefGroup = 141120EB18C98F4D00B15C7B /* Products */;
@@ -401,7 +436,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				141120F818C98F4D00B15C7B /* InfoPlist.strings in Resources */,
+				1410A1FD18CD95B500965AF7 /* SignViewController.xib in Resources */,
 				1411212718C98FFB00B15C7B /* MainViewController.xib in Resources */,
+				1410A1F518CD817F00965AF7 /* DetailViewController.xib in Resources */,
 				1411210018C98F4D00B15C7B /* Images.xcassets in Resources */,
 				1411215B18C9991A00B15C7B /* TestDB.sqlite in Resources */,
 			);
@@ -424,6 +461,7 @@
 			files = (
 				1411214918C994BD00B15C7B /* UIView+ModifyFrame.m in Sources */,
 				1411215F18C9AF4600B15C7B /* PPSSignatureView.m in Sources */,
+				1410A1F418CD817F00965AF7 /* DetailViewController.m in Sources */,
 				1411215718C9972C00B15C7B /* FMDatabasePool.m in Sources */,
 				1411215918C9972C00B15C7B /* FMResultSet.m in Sources */,
 				141120FE18C98F4D00B15C7B /* AppDelegate.m in Sources */,
@@ -434,6 +472,7 @@
 				1411213D18C9948900B15C7B /* NSDictionary+JSON.m in Sources */,
 				1411213918C9944E00B15C7B /* AppUtility.m in Sources */,
 				1411214718C994BD00B15C7B /* UIColor+HexString.m in Sources */,
+				1410A1FC18CD95B500965AF7 /* SignViewController.m in Sources */,
 				1411215618C9972C00B15C7B /* FMDatabaseAdditions.m in Sources */,
 				1411212618C98FFB00B15C7B /* MainViewController.m in Sources */,
 				1411214818C994BD00B15C7B /* UIImage+Loader.m in Sources */,
@@ -464,6 +503,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				141120F718C98F4D00B15C7B /* en */,
+				1410A1F718CD952400965AF7 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -472,6 +512,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				1411211018C98F4D00B15C7B /* en */,
+				1410A1F818CD952400965AF7 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -558,7 +599,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: YANG JUNTAO (X3SYKVFKUJ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AutoDesk/AutoDesk-Prefix.pch";
 				INFOPLIST_FILE = "AutoDesk/AutoDesk-Info.plist";
@@ -572,7 +613,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: YANG JUNTAO (X3SYKVFKUJ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AutoDesk/AutoDesk-Prefix.pch";
 				INFOPLIST_FILE = "AutoDesk/AutoDesk-Info.plist";
