@@ -17,6 +17,9 @@
 #import "NSDictionary+JSON.h"
 #import "FMDatabase.h"
 #import "PPSSignatureView.h"
+#import "MBProgressHUD.h"
+#import "GRRequestsManager.h"
+#import "YRBaseViewController.h"
 #define RECT(x,y,w,h) CGRectMake(x,y,w,h)
 #define POINT(x,y) CGPointMake(x,y)
 

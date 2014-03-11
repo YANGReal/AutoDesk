@@ -7,8 +7,8 @@
 //
 
 #import "SettingViewController.h"
-
-@interface SettingViewController ()<UIAlertViewDelegate>
+#import "GRListingRequest.h"
+@interface SettingViewController ()<UIAlertViewDelegate,GRRequestsManagerDelegate>
 
 {
     IBOutlet UIView *colorView;
@@ -32,7 +32,11 @@
     IBOutlet UITextField *userNameField;
     IBOutlet UITextField *passwordField;
     IBOutlet UITextField *titleField;
+    
+    BOOL isConnected;
 }
+
+@property (strong , nonatomic) GRRequestsManager *requestsManager;
 
 - (IBAction)save:(id)sender;
 - (IBAction)reset:(id)sender;
@@ -42,6 +46,8 @@
 
 
 - (IBAction)switcher:(UISwitch *)sender;
+
+- (IBAction)saveUpload:(id)sender;
 
 @end
 
@@ -120,6 +126,7 @@
     }
     
     NSString *server = [AppUtility getObjectForKey:@"server"];
+   
     if (server.length == 0)
     {
         serverField.text = @"";
@@ -130,35 +137,37 @@
     }
     
     NSString *port = [AppUtility getObjectForKey:@"port"];
-    if (server.length == 0)
+    if (port.length == 0)
     {
-        serverField.text = @"";
+        portField.text = @"";
     }
     else
     {
-        serverField.text = port;
+        portField.text = port;
     }
 
     NSString *user = [AppUtility getObjectForKey:@"user"];
-    if (server.length == 0)
+    if (user.length != 0)
     {
-        serverField.text = @"";
+        
+        userNameField.text = user;
     }
     else
     {
-        serverField.text = user;
+        userNameField.text = @"";
     }
 
     NSString *pw = [AppUtility getObjectForKey:@"pw"];
-    if (server.length == 0)
+    if (pw.length == 0)
     {
-        serverField.text = @"";
+        passwordField.text = @"";
     }
     else
     {
-        serverField.text = pw;
+        passwordField.text = pw;
     }
-
+    
+    
     
 }
 
@@ -192,12 +201,6 @@
     [AppUtility storeObject:fontSize forKey:@"font"];
     [self.navigationController popViewControllerAnimated:YES];
     
-    
-    [AppUtility storeObject:titleField.text forKey:@"title"];
-    [AppUtility storeObject:serverField.text forKey:@"server"];
-    [AppUtility storeObject:portField.text forKey:@"port"];
-    [AppUtility storeObject:userNameField.text forKey:@"user"];
-    [AppUtility storeObject:passwordField.text forKey:@"pw"];
     
 }
 
@@ -239,10 +242,114 @@
     }
 }
 
+
+- (IBAction)saveUpload:(id)sender
+{
+    
+    [AppUtility storeObject:titleField.text forKey:@"title"];
+    if ([self checkInput])
+    {
+        [AppUtility storeObject:serverField.text forKey:@"server"];
+        [AppUtility storeObject:portField.text forKey:@"port"];
+        [AppUtility storeObject:userNameField.text forKey:@"user"];
+        [AppUtility storeObject:passwordField.text forKey:@"pw"];
+        [self setupFTPServer];
+    }
+    
+}
+
+- (void)setupFTPServer
+{
+    [self showMBLoadingWithMessage:@"设置中..."];
+    NSString *server = serverField.text;
+    NSString *port = portField.text;
+    NSString *pw = passwordField.text;
+    NSString *uid = userNameField.text;
+    NSString *url = nil;
+    
+    if(![server hasPrefix:@"ftp://"])
+    {
+        url = [NSString stringWithFormat:@"ftp://%@:%@",server,port];
+    }
+    else
+    {
+        url = [NSString stringWithFormat:@"%@:%@",server,port];
+    }
+    
+    
+    self.requestsManager = [[GRRequestsManager alloc] initWithHostname:url
+                                                                  user:uid
+                                                              password:pw];
+    self.requestsManager.delegate = self;
+    
+    [self.requestsManager addRequestForCreateDirectoryAtPath:@"photo/"];
+    [self.requestsManager startProcessingRequests];
+    [self performSelector:@selector(hideLoding) withObject:nil afterDelay:6.0];
+}
+
+- (void)requestsManager:(id<GRRequestsManagerProtocol>)requestsManager didCompleteCreateDirectoryRequest:(id<GRRequestProtocol>)request
+{
+    isConnected = YES;
+    [self hideMBLoading];
+    [self showMBCompletedWithMessage:@"FTP设置成功"];
+}
+
+
+- (void)requestsManager:(id<GRRequestsManagerProtocol>)requestsManager didFailRequest:(id<GRRequestProtocol>)request withError:(NSError *)error
+{
+    [self hideMBLoading];
+    [self showMBFailedWithMessage:@"FTP设置失败"];
+}
+
+- (void)hideLoding
+{
+    if (!isConnected)
+    {
+        [self hideMBLoading];
+        [self showMBFailedWithMessage:@"连接超时"];
+    }
+}
+
+
+- (BOOL)checkInput
+{
+    if (serverField.text.length == 0)
+    {
+        [serverField becomeFirstResponder];
+        [AppUtility showAlert:@"提示" message:@"请输入FTP服务器地址"];
+        return NO;
+    }
+    if (portField.text.length == 0)
+    {
+        [portField becomeFirstResponder];
+        [AppUtility showAlert:@"提示" message:@"请输入FTP端口号"];
+        return NO;
+    }
+    if (userNameField.text.length == 0)
+    {
+        [userNameField becomeFirstResponder];
+        [AppUtility showAlert:@"提示" message:@"请输入FTP用户名"];
+        return NO;
+    }
+    if (passwordField.text.length == 0)
+    {
+        [passwordField becomeFirstResponder];
+        [AppUtility showAlert:@"提示" message:@"请输入FTP密码"];
+        return NO;
+    }
+    return YES;
+}
+
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
+
 
 @end

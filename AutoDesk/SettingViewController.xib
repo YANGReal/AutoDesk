@@ -14,10 +14,10 @@
                 <outlet property="gLabel" destination="qCW-Mk-A3O" id="7jB-bD-Xda"/>
                 <outlet property="greenSlider" destination="pqe-Pb-4ki" id="Oj3-XY-uZY"/>
                 <outlet property="passwordField" destination="lKs-1D-0zr" id="p4G-rN-Rbr"/>
-                <outlet property="portField" destination="9a4-hV-sTU" id="7Gd-eQ-YFA"/>
+                <outlet property="portField" destination="9a4-hV-sTU" id="cq7-tT-zPc"/>
                 <outlet property="rLabel" destination="gdK-MG-O1D" id="X74-dU-Qdw"/>
                 <outlet property="redSlider" destination="o0P-95-Zgo" id="KHT-o5-X2n"/>
-                <outlet property="serverField" destination="3S0-Z2-SHn" id="pG7-Cn-5DW"/>
+                <outlet property="serverField" destination="3S0-Z2-SHn" id="TBJ-yl-KrP"/>
                 <outlet property="switcher" destination="quf-Ba-Nqm" id="ZOm-Om-DqT"/>
                 <outlet property="titleField" destination="p0A-Sz-Aw5" id="CAP-GU-07u"/>
                 <outlet property="userNameField" destination="pwG-EI-fJQ" id="pbb-SY-jvn"/>
@@ -132,7 +132,7 @@
                     <rect key="frame" x="221" y="680" width="122" height="63"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="1" green="0.1273255012" blue="0.2046684601" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal" title="保存设置">
+                    <state key="normal" title="保存签名设置">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -144,7 +144,7 @@
                     <rect key="frame" x="660" y="680" width="122" height="63"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="1" green="0.1273255012" blue="0.2046684601" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal" title="恢复默认设置">
+                    <state key="normal" title="恢复签名设置">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -211,6 +211,18 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="m7F-UA-ewL">
+                    <rect key="frame" x="411" y="229" width="158" height="43"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="1" green="0.041879374759999997" blue="0.145625952" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" title="保存上传设置">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="saveUpload:" destination="-1" eventType="touchUpInside" id="tuB-fq-OQM"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>

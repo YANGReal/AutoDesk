@@ -49,6 +49,21 @@
 		1411215918C9972C00B15C7B /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1411215418C9972C00B15C7B /* FMResultSet.m */; };
 		1411215F18C9AF4600B15C7B /* PPSSignatureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1411215E18C9AF4600B15C7B /* PPSSignatureView.m */; };
 		1411216118C9AFD300B15C7B /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1411216018C9AFD300B15C7B /* GLKit.framework */; };
+		145E6E0818CEA350001E9F6C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 145E6E0718CEA350001E9F6C /* CFNetwork.framework */; };
+		145E6E0C18CEA3F9001E9F6C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 145E6E0B18CEA3F9001E9F6C /* MBProgressHUD.m */; };
+		145E6E2618CEA520001E9F6C /* GRCreateDirectoryRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 145E6E1018CEA520001E9F6C /* GRCreateDirectoryRequest.m */; };
+		145E6E2718CEA520001E9F6C /* GRDeleteRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 145E6E1218CEA520001E9F6C /* GRDeleteRequest.m */; };
+		145E6E2818CEA520001E9F6C /* GRDownloadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 145E6E1418CEA520001E9F6C /* GRDownloadRequest.m */; };
+		145E6E2918CEA520001E9F6C /* GRListingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 145E6E1618CEA520001E9F6C /* GRListingRequest.m */; };
+		145E6E2A18CEA520001E9F6C /* GRRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 145E6E1818CEA520001E9F6C /* GRRequest.m */; };
+		145E6E2B18CEA520001E9F6C /* GRUploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 145E6E1B18CEA520001E9F6C /* GRUploadRequest.m */; };
+		145E6E2C18CEA520001E9F6C /* GRError.m in Sources */ = {isa = PBXBuildFile; fileRef = 145E6E1E18CEA520001E9F6C /* GRError.m */; };
+		145E6E2D18CEA520001E9F6C /* GRQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 145E6E2018CEA520001E9F6C /* GRQueue.m */; };
+		145E6E2E18CEA520001E9F6C /* GRRequestsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 145E6E2218CEA520001E9F6C /* GRRequestsManager.m */; };
+		145E6E2F18CEA520001E9F6C /* GRStreamInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 145E6E2518CEA520001E9F6C /* GRStreamInfo.m */; };
+		14873B3718CEA2EC008DF1EF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14873B3618CEA2EC008DF1EF /* SystemConfiguration.framework */; };
+		14F59E4118CEB067004CD0BB /* YRBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F59E4018CEB067004CD0BB /* YRBaseViewController.m */; };
+		14F59E4518CED135004CD0BB /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 14F59E4418CED135004CD0BB /* avatar.png */; };
 		6E217C9218CDEB62000250B7 /* YRDragLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E217C9118CDEB62000250B7 /* YRDragLabel.m */; };
 		6E217C9518CDFAC8000250B7 /* TestDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 6E217C9418CDFAC8000250B7 /* TestDB.sqlite */; };
 		6E217C9818CDFB39000250B7 /* YRDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E217C9718CDFB39000250B7 /* YRDragView.m */; };
@@ -134,6 +149,35 @@
 		1411215D18C9AF4600B15C7B /* PPSSignatureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSSignatureView.h; sourceTree = "<group>"; };
 		1411215E18C9AF4600B15C7B /* PPSSignatureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSSignatureView.m; sourceTree = "<group>"; };
 		1411216018C9AFD300B15C7B /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		145E6E0718CEA350001E9F6C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		145E6E0A18CEA3F9001E9F6C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		145E6E0B18CEA3F9001E9F6C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		145E6E0F18CEA520001E9F6C /* GRCreateDirectoryRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRCreateDirectoryRequest.h; sourceTree = "<group>"; };
+		145E6E1018CEA520001E9F6C /* GRCreateDirectoryRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRCreateDirectoryRequest.m; sourceTree = "<group>"; };
+		145E6E1118CEA520001E9F6C /* GRDeleteRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRDeleteRequest.h; sourceTree = "<group>"; };
+		145E6E1218CEA520001E9F6C /* GRDeleteRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRDeleteRequest.m; sourceTree = "<group>"; };
+		145E6E1318CEA520001E9F6C /* GRDownloadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRDownloadRequest.h; sourceTree = "<group>"; };
+		145E6E1418CEA520001E9F6C /* GRDownloadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRDownloadRequest.m; sourceTree = "<group>"; };
+		145E6E1518CEA520001E9F6C /* GRListingRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRListingRequest.h; sourceTree = "<group>"; };
+		145E6E1618CEA520001E9F6C /* GRListingRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRListingRequest.m; sourceTree = "<group>"; };
+		145E6E1718CEA520001E9F6C /* GRRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRRequest.h; sourceTree = "<group>"; };
+		145E6E1818CEA520001E9F6C /* GRRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRRequest.m; sourceTree = "<group>"; };
+		145E6E1918CEA520001E9F6C /* GRRequestProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRRequestProtocol.h; sourceTree = "<group>"; };
+		145E6E1A18CEA520001E9F6C /* GRUploadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRUploadRequest.h; sourceTree = "<group>"; };
+		145E6E1B18CEA520001E9F6C /* GRUploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRUploadRequest.m; sourceTree = "<group>"; };
+		145E6E1D18CEA520001E9F6C /* GRError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRError.h; sourceTree = "<group>"; };
+		145E6E1E18CEA520001E9F6C /* GRError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRError.m; sourceTree = "<group>"; };
+		145E6E1F18CEA520001E9F6C /* GRQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRQueue.h; sourceTree = "<group>"; };
+		145E6E2018CEA520001E9F6C /* GRQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRQueue.m; sourceTree = "<group>"; };
+		145E6E2118CEA520001E9F6C /* GRRequestsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRRequestsManager.h; sourceTree = "<group>"; };
+		145E6E2218CEA520001E9F6C /* GRRequestsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRRequestsManager.m; sourceTree = "<group>"; };
+		145E6E2318CEA520001E9F6C /* GRRequestsManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRRequestsManagerProtocol.h; sourceTree = "<group>"; };
+		145E6E2418CEA520001E9F6C /* GRStreamInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRStreamInfo.h; sourceTree = "<group>"; };
+		145E6E2518CEA520001E9F6C /* GRStreamInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRStreamInfo.m; sourceTree = "<group>"; };
+		14873B3618CEA2EC008DF1EF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		14F59E3F18CEB067004CD0BB /* YRBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRBaseViewController.h; sourceTree = "<group>"; };
+		14F59E4018CEB067004CD0BB /* YRBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRBaseViewController.m; sourceTree = "<group>"; };
+		14F59E4418CED135004CD0BB /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
 		6E217C9018CDEB62000250B7 /* YRDragLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YRDragLabel.h; path = AutoDesk/YRDragLabel.h; sourceTree = "<group>"; };
 		6E217C9118CDEB62000250B7 /* YRDragLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YRDragLabel.m; path = AutoDesk/YRDragLabel.m; sourceTree = "<group>"; };
 		6E217C9418CDFAC8000250B7 /* TestDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestDB.sqlite; sourceTree = "<group>"; };
@@ -148,6 +192,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				145E6E0818CEA350001E9F6C /* CFNetwork.framework in Frameworks */,
+				14873B3718CEA2EC008DF1EF /* SystemConfiguration.framework in Frameworks */,
 				1411216118C9AFD300B15C7B /* GLKit.framework in Frameworks */,
 				1411213518C9938200B15C7B /* libsqlite3.dylib in Frameworks */,
 				1411213318C9937700B15C7B /* QuartzCore.framework in Frameworks */,
@@ -179,6 +225,7 @@
 				1410A20B18CDB7E900965AF7 /* camera.png */,
 				1410A20D18CDBADE00965AF7 /* save.png */,
 				1410A20F18CDBB4500965AF7 /* setting.png */,
+				14F59E4418CED135004CD0BB /* avatar.png */,
 			);
 			name = DetailViewController;
 			sourceTree = "<group>";
@@ -240,6 +287,8 @@
 		141120EC18C98F4D00B15C7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				145E6E0718CEA350001E9F6C /* CFNetwork.framework */,
+				14873B3618CEA2EC008DF1EF /* SystemConfiguration.framework */,
 				1411216018C9AFD300B15C7B /* GLKit.framework */,
 				1411213418C9938200B15C7B /* libsqlite3.dylib */,
 				1411213218C9937700B15C7B /* QuartzCore.framework */,
@@ -256,6 +305,7 @@
 			children = (
 				141120FC18C98F4D00B15C7B /* AppDelegate.h */,
 				141120FD18C98F4D00B15C7B /* AppDelegate.m */,
+				14F59E3E18CEB067004CD0BB /* BaseVC */,
 				1411212218C98FFB00B15C7B /* MainViewController */,
 				1410A1F618CD818400965AF7 /* DetailViewController */,
 				1410A1FE18CD95B900965AF7 /* SignViewController */,
@@ -311,8 +361,9 @@
 		1411212818C9913100B15C7B /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				1410A1FF18CDB02D00965AF7 /* TMQuiltView */,
 				1411213118C992FA00B15C7B /* Global.h */,
+				145E6E0918CEA3F9001E9F6C /* MBProgressHUD */,
+				1410A1FF18CDB02D00965AF7 /* TMQuiltView */,
 				1411214A18C9972C00B15C7B /* FMDB */,
 				1411213618C9944E00B15C7B /* AppUtility */,
 				1411213E18C994BD00B15C7B /* UIColor+HexString */,
@@ -322,6 +373,7 @@
 				1411215C18C9AF4600B15C7B /* PPSSignatureView */,
 				1411212D18C991C400B15C7B /* ChineseToPinyin */,
 				6E217C9318CDED15000250B7 /* YRDragLabel */,
+				145E6E0D18CEA520001E9F6C /* FTP */,
 				6E217C9918CDFB3E000250B7 /* YRDragView */,
 			);
 			name = Utility;
@@ -413,6 +465,71 @@
 			);
 			name = PPSSignatureView;
 			path = AutoDesk/Utility/ChineseToPinyin/PPSSignatureView;
+			sourceTree = "<group>";
+		};
+		145E6E0918CEA3F9001E9F6C /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				145E6E0A18CEA3F9001E9F6C /* MBProgressHUD.h */,
+				145E6E0B18CEA3F9001E9F6C /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			path = AutoDesk/Utility/MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		145E6E0D18CEA520001E9F6C /* FTP */ = {
+			isa = PBXGroup;
+			children = (
+				145E6E0E18CEA520001E9F6C /* Requests */,
+				145E6E1C18CEA520001E9F6C /* Utils */,
+			);
+			name = FTP;
+			path = AutoDesk/Utility/FTP;
+			sourceTree = "<group>";
+		};
+		145E6E0E18CEA520001E9F6C /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				145E6E0F18CEA520001E9F6C /* GRCreateDirectoryRequest.h */,
+				145E6E1018CEA520001E9F6C /* GRCreateDirectoryRequest.m */,
+				145E6E1118CEA520001E9F6C /* GRDeleteRequest.h */,
+				145E6E1218CEA520001E9F6C /* GRDeleteRequest.m */,
+				145E6E1318CEA520001E9F6C /* GRDownloadRequest.h */,
+				145E6E1418CEA520001E9F6C /* GRDownloadRequest.m */,
+				145E6E1518CEA520001E9F6C /* GRListingRequest.h */,
+				145E6E1618CEA520001E9F6C /* GRListingRequest.m */,
+				145E6E1718CEA520001E9F6C /* GRRequest.h */,
+				145E6E1818CEA520001E9F6C /* GRRequest.m */,
+				145E6E1918CEA520001E9F6C /* GRRequestProtocol.h */,
+				145E6E1A18CEA520001E9F6C /* GRUploadRequest.h */,
+				145E6E1B18CEA520001E9F6C /* GRUploadRequest.m */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		145E6E1C18CEA520001E9F6C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				145E6E1D18CEA520001E9F6C /* GRError.h */,
+				145E6E1E18CEA520001E9F6C /* GRError.m */,
+				145E6E1F18CEA520001E9F6C /* GRQueue.h */,
+				145E6E2018CEA520001E9F6C /* GRQueue.m */,
+				145E6E2118CEA520001E9F6C /* GRRequestsManager.h */,
+				145E6E2218CEA520001E9F6C /* GRRequestsManager.m */,
+				145E6E2318CEA520001E9F6C /* GRRequestsManagerProtocol.h */,
+				145E6E2418CEA520001E9F6C /* GRStreamInfo.h */,
+				145E6E2518CEA520001E9F6C /* GRStreamInfo.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		14F59E3E18CEB067004CD0BB /* BaseVC */ = {
+			isa = PBXGroup;
+			children = (
+				14F59E3F18CEB067004CD0BB /* YRBaseViewController.h */,
+				14F59E4018CEB067004CD0BB /* YRBaseViewController.m */,
+			);
+			path = BaseVC;
 			sourceTree = "<group>";
 		};
 		6E217C9318CDED15000250B7 /* YRDragLabel */ = {
@@ -512,6 +629,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14F59E4518CED135004CD0BB /* avatar.png in Resources */,
 				1410A20A18CDB1B900965AF7 /* CustomerCell.xib in Resources */,
 				141120F818C98F4D00B15C7B /* InfoPlist.strings in Resources */,
 				1410A20E18CDBADE00965AF7 /* save.png in Resources */,
@@ -544,20 +662,32 @@
 				1411214918C994BD00B15C7B /* UIView+ModifyFrame.m in Sources */,
 				1411215F18C9AF4600B15C7B /* PPSSignatureView.m in Sources */,
 				1410A1F418CD817F00965AF7 /* DetailViewController.m in Sources */,
+				145E6E2B18CEA520001E9F6C /* GRUploadRequest.m in Sources */,
 				1410A20518CDB02D00965AF7 /* TMQuiltViewCell.m in Sources */,
+				145E6E2F18CEA520001E9F6C /* GRStreamInfo.m in Sources */,
 				1410A20418CDB02D00965AF7 /* TMQuiltView.m in Sources */,
 				1411215718C9972C00B15C7B /* FMDatabasePool.m in Sources */,
+				145E6E2C18CEA520001E9F6C /* GRError.m in Sources */,
 				1411215918C9972C00B15C7B /* FMResultSet.m in Sources */,
+				14F59E4118CEB067004CD0BB /* YRBaseViewController.m in Sources */,
 				141120FE18C98F4D00B15C7B /* AppDelegate.m in Sources */,
 				1411213018C991C400B15C7B /* ChineseToPinyin.m in Sources */,
 				1410A21418CDBE6B00965AF7 /* SettingViewController.m in Sources */,
+				145E6E2E18CEA520001E9F6C /* GRRequestsManager.m in Sources */,
 				A15588C018CCB996006C209D /* MainTableViewCell.m in Sources */,
 				1411215818C9972C00B15C7B /* FMDatabaseQueue.m in Sources */,
+				145E6E2D18CEA520001E9F6C /* GRQueue.m in Sources */,
+				145E6E2818CEA520001E9F6C /* GRDownloadRequest.m in Sources */,
 				1410A20818CDB0F700965AF7 /* CustomerCell.m in Sources */,
 				1411215518C9972C00B15C7B /* FMDatabase.m in Sources */,
+				145E6E2918CEA520001E9F6C /* GRListingRequest.m in Sources */,
 				1411213D18C9948900B15C7B /* NSDictionary+JSON.m in Sources */,
 				1411213918C9944E00B15C7B /* AppUtility.m in Sources */,
+				145E6E2618CEA520001E9F6C /* GRCreateDirectoryRequest.m in Sources */,
+				145E6E2718CEA520001E9F6C /* GRDeleteRequest.m in Sources */,
+				145E6E2A18CEA520001E9F6C /* GRRequest.m in Sources */,
 				1411214718C994BD00B15C7B /* UIColor+HexString.m in Sources */,
+				145E6E0C18CEA3F9001E9F6C /* MBProgressHUD.m in Sources */,
 				1410A1FC18CD95B500965AF7 /* SignViewController.m in Sources */,
 				1411215618C9972C00B15C7B /* FMDatabaseAdditions.m in Sources */,
 				6E217C9818CDFB39000250B7 /* YRDragView.m in Sources */,

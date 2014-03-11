@@ -17,7 +17,7 @@
 
 @end
 
-@interface DetailViewController : UIViewController
+@interface DetailViewController : YRBaseViewController
 @property (strong , nonatomic) NSDictionary *data;
 @property (assign , nonatomic) id<DetailViewControllerDelegate>delegate;
 @end

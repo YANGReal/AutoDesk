@@ -10,10 +10,20 @@
 #import "SignViewController.h"
 #import "SettingViewController.h"
 #import "YRDragLabel.h"
-@interface DetailViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,SignViewControllerDelegate,UIAlertViewDelegate>
+@interface DetailViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,SignViewControllerDelegate,UIAlertViewDelegate,GRRequestsManagerDelegate>
+{
+    
+    NSString *photoPath;
+    NSString *signPath;
+    NSString *picturePath;
+    
+    NSInteger time;
+    NSTimer *timer;
+
+}
 @property (weak , nonatomic) IBOutlet YRDragLabel *label;
 @property (weak , nonatomic) IBOutlet UIImageView *imgView;
-
+@property (strong , nonatomic) GRRequestsManager *requestsManager;
 
 - (IBAction)save:(id)sender;
 - (IBAction)takePhoto:(id)sender;
@@ -88,6 +98,8 @@
 
 - (IBAction)save:(id)sender
 {
+    [self uploadToFTP];
+    return;
     if (self.imgView.image == nil)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还未拍照" delegate:nil cancelButtonTitle:@"好" otherButtonTitles:nil, nil];
@@ -182,7 +194,7 @@
     
     // Draw image2
     
-    [image1 drawInRect:CGRectMake(0, image2.size.height, image1.size.width, image1.size.height)];
+    [image1 drawInRect:CGRectMake(0, image2.size.height, image2.size.width, image1.size.height)];
     
     UIImage *resultingImage = UIGraphicsGetImageFromCurrentImageContext();
     
@@ -191,6 +203,134 @@
     return resultingImage;
     
 }
+
+- (void)_setupManager
+{
+    NSString *server = [AppUtility getObjectForKey:@"server"];
+    if(server.length == 0)
+    {
+        [AppUtility showAlert:@"提示" message:@"还未设置FTP服务器"];
+        return;
+    }
+    NSString *port = [AppUtility getObjectForKey:@"port"];
+    NSString *uid = [AppUtility getObjectForKey:@"user"];
+    NSString *pw = [AppUtility getObjectForKey:@"pw"];
+    
+    NSString *url = nil;
+    if(![server hasPrefix:@"ftp://"])
+    {
+        url = [NSString stringWithFormat:@"ftp://%@:%@",server,port];
+    }
+    else
+    {
+        url = [NSString stringWithFormat:@"%@:%@",server,port];
+    }
+    
+    if (self.requestsManager == nil)
+    {
+        self.requestsManager = [[GRRequestsManager alloc] initWithHostname:url
+                                                                      user:uid
+                                                                  password:pw];
+        self.requestsManager.delegate = self;
+        
+    }
+}
+
+
+- (void)uploadToFTP
+{
+    
+    photoPath = [NSString stringWithFormat:@"%@_%@.png",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
+    [self _setupManager];
+    
+    NSString *server = [AppUtility getObjectForKey:@"server"];
+    DLog(@"server = %@",server);
+    if(server.length == 0)
+    {
+        return;
+    }
+    
+    timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timeOut:) userInfo:nil repeats:YES];
+    
+    [self showMBLoadingWithMessage:@"上传中..."];
+    UIImage *img1 = [UIImage imageFromView:_label];
+    UIImage *img2 = self.imgView.image;
+    UIImage *img  = [self addImageview:img1 toImage:img2];
+    NSData *data = UIImagePNGRepresentation(img);
+    [data writeToFile:CACH_DOCUMENTS_PATH(photoPath) atomically:YES];
+    NSString *remotepath = [NSString stringWithFormat:@"photo/%@",[photoPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    DLog(@"remotePath = %@",remotepath);
+    [self.requestsManager addRequestForUploadFileAtLocalPath:CACH_DOCUMENTS_PATH(photoPath) toRemotePath:remotepath];
+    [self.requestsManager startProcessingRequests];
+}
+
+#pragma mark - FTP 代理方法
+
+- (void)requestsManager:(id<GRRequestsManagerProtocol>)requestsManager didCompleteUploadRequest:(id<GRDataExchangeRequestProtocol>)request
+{
+    // static int i = 0;
+    //  i++;
+    //  if (i%3 == 0)
+    // {
+    [self hideMBLoading];
+    [self showMBCompletedWithMessage:@"上传成功"];
+    //[self hideMBLoading];
+    //   i = 0;
+    [timer invalidate];
+    time = 0;
+    // }
+}
+
+- (void)timeOut:(NSTimer *)t
+{
+    time ++;
+    if (time>15)
+    {
+        time = 0;
+        [timer invalidate];
+        [self hideMBLoading];
+        [self showMBFailedWithMessage:@"超时,请稍后再试"];
+        [self savePhoto];
+    }
+    DLog(@"time = %d",time);
+}
+
+
+
+- (void)savePhoto
+{
+    UIImage *img1 = [UIImage imageFromView:_label];
+    UIImage *img2 = self.imgView.image;
+    UIImage *img  = [self addImageview:img1 toImage:img2];
+    NSData *data = UIImagePNGRepresentation(img);
+    
+    NSString *path = [NSString stringWithFormat:@"N_%@_%@.png",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
+    [data writeToFile:DOCUMENTS_PATH(path) atomically:YES];
+
+}
+
+- (void)requestsManager:(id<GRRequestsManagerProtocol>)requestsManager didFailRequest:(id<GRRequestProtocol>)request withError:(NSError *)error
+{
+    DLog(@"error code = %@",error.userInfo);
+    NSString *str = [error.userInfo objectForKey:@"message"];
+    if (![str isEqualToString:@"Can't overwrite directory!"])
+    {
+        
+    }
+    if ([str isEqualToString:@"Unknown error!"])
+    {
+        [self hideMBLoading];
+        [self showMBFailedWithMessage:@"请检查FTP设置"];
+        //[self hideMBLoading];
+    }
+    
+    if ([str isEqualToString:@"Not logged in."])
+    {
+        [self hideMBLoading];
+        [self showMBFailedWithMessage:@"用户名错误或密码错误"];
+    }
+}
+
 
 
 

@@ -10,7 +10,7 @@
 
 @interface AppUtility : NSObject
 
-
++ (void)showAlert:(NSString *)title message:(NSString *)message;
 
 /*验证邮箱*/
 + (BOOL)isValidateEmail:(NSString *)email;

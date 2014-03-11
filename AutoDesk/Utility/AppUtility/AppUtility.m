@@ -96,6 +96,14 @@
 }
 
 
++(void)showAlert:(NSString *)title message:(NSString *)message
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"好", nil];
+    [alert show];
+}
+
+
+
 #pragma mark - MD5加密
 
 + (NSString *)md5String:(NSString *)str
