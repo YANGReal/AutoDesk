@@ -149,5 +149,25 @@
     return NO;
 }
 
++ (BOOL)createFolderAtPath:(NSString *)path
+{
+    BOOL isDir = NO;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL existed = [fileManager fileExistsAtPath:path isDirectory:&isDir];
+    if ( !(isDir == YES && existed == YES) )
+    {
+       return  [fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return NO;
+}
+
++ (NSString *)timeStample
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *destDateString = [dateFormatter stringFromDate:[NSDate date]];
+    return destDateString;
+}
+
 
 @end

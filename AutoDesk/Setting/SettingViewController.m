@@ -118,7 +118,7 @@
     NSString *title = [AppUtility getObjectForKey:@"title"];
     if (title.length == 0)
     {
-        titleField.text = @"找座位";
+        titleField.text = @"E歌智能找位系统";
     }
     else
     {

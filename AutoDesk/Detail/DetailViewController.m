@@ -16,7 +16,7 @@
     NSString *photoPath;
     NSString *signPath;
     NSString *picturePath;
-    
+  
     NSInteger time;
     NSTimer *timer;
 

@@ -49,4 +49,9 @@
 
 + (BOOL)updateDB:(NSString *)path WithSQL:(NSString *)sql;
 
++ (BOOL)createFolderAtPath:(NSString *)path;
+
++ (NSString *)timeStample;
+
+
 @end

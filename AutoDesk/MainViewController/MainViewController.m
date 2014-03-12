@@ -13,11 +13,14 @@
 #import "CustomerCell.h"
 #import "SettingViewController.h"
 #import "YRDragView.h"
+#import "SignViewController.h"
 @interface MainViewController () <UISearchBarDelegate, UIAlertViewDelegate,TMQuiltViewDataSource,TMQuiltViewDelegate,UITextFieldDelegate,DetailViewControllerDelegate>
 {
-    IBOutlet UILabel *label1;
-    IBOutlet UILabel *label2;
-    IBOutlet UILabel *label3;
+    IBOutlet UILabel *label1;//总计
+    IBOutlet UILabel *label2;//已拍照
+    IBOutlet UILabel *label3;//未拍照
+    IBOutlet UILabel *label4;//临时签到
+    IBOutlet UILabel *label5;//未签到
     
 }
 
@@ -32,6 +35,9 @@
 - (IBAction)cancelBtnClicked:(id)sender;
 
 - (IBAction)hiddenDragView:(id)sender;
+
+- (IBAction)tempSign:(id)sender;
+
 @end
 
 @implementation MainViewController
@@ -41,16 +47,17 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = @"找座位";
+      
         NSString *title = [AppUtility getObjectForKey:@"title"];
         if (title.length == 0)
         {
-            self.title = @"找座位";
+            self.title = @"E歌智能找位系统";
         }
         else
         {
             self.title = title;
         }
+        //DLog(@"title = %@",title);
         self.searchDataArray = [[NSArray alloc] init];
     }
     return self;
@@ -71,7 +78,7 @@
     [self.view insertSubview:imgView atIndex:0];
     imgView.image = [UIImage imageWithContentsOfFile:DOCUMENTS_PATH(@"bg.png")];
     //DLog(@"path = %@",CACH_DOCUMENTS_PATH(@"bg.png"));
-    imgView.backgroundColor = [UIColor redColor];
+    //imgView.backgroundColor = [UIColor redColor];
     self.cancelBtn.enabled = NO;
     self.mainTableView = [[TMQuiltView alloc] initWithFrame:CGRectMake(0, 130, 1024, DEVICE_WIDTH - 130)];
     [self.mainTableView setDelegate:self];
@@ -119,12 +126,19 @@
 
 - (IBAction)cancelBtnClicked:(id)sender
 {
+    self.searchBar.text = @"";
     self.searchDataArray = nil;
     [self.searchBar resignFirstResponder];
     [self.mainTableView reloadData];
 }
 
-
+- (IBAction)tempSign:(id)sender
+{
+    [self.searchBar resignFirstResponder];
+    SignViewController *signVC = [[SignViewController alloc] initWithNibName:@"SignViewController" bundle:nil];
+    signVC.isTemp = YES;
+    [self.navigationController pushViewController:signVC animated:YES];
+}
 - (void)initDatabase
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"TestDB" ofType:@"sqlite"];
@@ -153,19 +167,8 @@
             [AppUtility updateDB:DOCUMENTS_PATH(@"data.sqlite") WithSQL:sql];
         }
     }
-   // DLog(@"data = %@",data);
-    label1.text = [NSString stringWithFormat:@"%d人",data.count];
-    NSString *photo = [AppUtility getObjectForKey:@"photo"];
-    if (photo.length == 0)
-    {
-        label2.text = @"0人";
-        label3.text = label1.text;
-    }
-    else
-    {
-        label2.text = [NSString stringWithFormat:@"%@人",photo];
-        label3.text = [NSString stringWithFormat:@"%d人",data.count-photo.intValue];
-    }
+    [self flushStatisticsData];
+    
     
 }
 
@@ -248,7 +251,13 @@
 
 - (void)backFromDetailViewController:(DetailViewController *)vc
 {
-    label1.text = [NSString stringWithFormat:@"%d人",_allDataArray.count];
+    [self flushStatisticsData];
+}
+
+
+- (void)flushStatisticsData
+{
+    label1.text = [NSString stringWithFormat:@"%lu人",(unsigned long)_allDataArray.count];
     NSString *photo = [AppUtility getObjectForKey:@"photo"];
     if (photo.length == 0)
     {
@@ -258,10 +267,37 @@
     else
     {
         label2.text = [NSString stringWithFormat:@"%@人",photo];
-        label3.text = [NSString stringWithFormat:@"%d人",_allDataArray.count-photo.intValue];
+        label3.text = [NSString stringWithFormat:@"%lu人",(long)(_allDataArray.count-photo.intValue)];
+    }
+    
+    NSString *temp_sign = [AppUtility getObjectForKey:@"temp_sign"];
+    if (temp_sign.length == 0)
+    {
+        label4.text = @"0人";
+    }
+    else
+    {
+        label4.text = [NSString stringWithFormat:@"%@人",temp_sign];
+    }
+    
+    NSString *sign = [AppUtility getObjectForKey:@"sign_count"];
+    if (sign.length == 0)
+    {
+        label5.text = [NSString stringWithFormat:@"%lu人",(unsigned long)_allDataArray.count];
+    }
+    else
+    {
+        NSInteger sign_count = sign.integerValue;
+        NSInteger all = _allDataArray.count;
+        label5.text = [NSString stringWithFormat:@"%lu人",(long)(all-sign_count)];
+        if (sign_count>all)
+        {
+            label5.text = @"0人";
+        }
     }
 
 }
+
 
 #pragma mark *****UITextFieldDelegate method*****
 

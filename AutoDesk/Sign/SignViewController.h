@@ -16,8 +16,9 @@
 
 @end
 
-@interface SignViewController : UIViewController
+@interface SignViewController : YRBaseViewController
 @property (strong , nonatomic) UIImage *image;
 @property (assign , nonatomic) id<SignViewControllerDelegate>delegate;
 @property (copy ,nonatomic) NSString *name;
+@property (assign , nonatomic) BOOL isTemp;
 @end

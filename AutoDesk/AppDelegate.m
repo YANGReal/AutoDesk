@@ -13,14 +13,27 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     MainViewController *mainVC = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:mainVC];
     [self.window makeKeyAndVisible];
+    [self createFolder];
     return YES;
 }
+
+- (void)createFolder
+{
+    [AppUtility createFolderAtPath:DOCUMENTS_PATH(@"Photo")];
+    [AppUtility createFolderAtPath:DOCUMENTS_PATH(@"Sign")];
+    [AppUtility createFolderAtPath:DOCUMENTS_PATH(@"Temp_Photo")];
+    [AppUtility createFolderAtPath:DOCUMENTS_PATH(@"Temp_Sign")];
+    
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

@@ -8,10 +8,19 @@
 
 #import "SignViewController.h"
 #import "PPSSignatureView.h"
-@interface SignViewController ()
+@interface SignViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,GRRequestsManagerDelegate>
+{
+    BOOL takePhoto;
+    NSString *photoPath;
+    UIImage *photo;
+    NSTimer *timer;
+    NSInteger time;
+}
 @property (weak , nonatomic) IBOutlet UIImageView  *imgView;
 @property (strong , nonatomic) PPSSignatureView  *signView;
 @property (strong , nonatomic) UIImageView *imgView2;
+@property (strong , nonatomic) GRRequestsManager *requestsManager;
+
 @end
 
 @implementation SignViewController
@@ -38,11 +47,6 @@
 
 - (void)setupViews
 {
-    
-    //self.imgView.image = self.image;
-    //self.imgView2 = [[UIImageView alloc] initWithFrame:self.view.bounds];
-   // self.imgView2.contentMode = UIViewContentModeScaleAspectFit;
-    //[self.view addSubview:self.imgView2];
     self.signView = [[PPSSignatureView alloc] initWithFrame:self.view.bounds];
     NSDictionary *colorDict = [AppUtility getObjectForKey:@"color"];
     if (colorDict == nil)
@@ -65,11 +69,20 @@
     {
         self.signView.fontWidth = fontWidth.intValue;
     }
-    //self.signView.color = GLKColor(255 , 255, 255);
     self.signView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.signView];
-    //[self.view.layer addSublayer:self.signView.layer];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clear)];
+    if (self.isTemp)
+    {
+        UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clear)];
+        UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithTitle:@"拍照" style:UIBarButtonItemStylePlain target:self action:@selector(takePhoto)];
+        
+        self.navigationItem.rightBarButtonItems = @[item1,item2];
+
+    }
+    else
+    {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clear)];
+    }
 }
 
 
@@ -79,18 +92,235 @@
 }
 
 
+- (void)takePhoto
+{
+    takePhoto = YES;
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    picker.showsCameraControls = YES;
+    picker.delegate = self;
+    picker.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+    [self presentViewController:picker animated:YES completion:nil];
+
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    takePhoto = NO;
+    photo = [info objectForKey:UIImagePickerControllerOriginalImage];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self uploadToFTP];
+    }];
+}
+
+
+
+
+
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    takePhoto = NO;
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
+    
     [super viewWillDisappear:animated];
+    if (takePhoto)
+    {
+        return;
+    }
+    
+    
+    if (self.isTemp)
+    {
+        if ([self.signView hasSignature]||photo)//临时签到
+        {
+             DLog(@"已经签到");
+            NSString *temp_sign = [AppUtility getObjectForKey:@"temp_sign"];
+            int i ;
+            if (temp_sign.length == 0)
+            {
+                i = 0;
+            }
+            else
+            {
+                i = temp_sign.intValue;
+            }
+            i++;
+            NSString *count = [NSString stringWithFormat:@"%d",i];
+            [AppUtility storeObject:count forKey:@"temp_sign"];
+
+        }
+        else
+        {
+            DLog(@"未签到");
+        }
+    
+    }
+    
     if ([self.signView hasSignature])
     {
         UIImage *img = [self.signView signatureImage];
         NSData *data = UIImagePNGRepresentation(img);
-        NSString *fileName = [NSString stringWithFormat:@"sign_%@_.png",_name];
+        
+        NSString *fileName = nil;
+        if (!self.isTemp)//签到
+        {
+           fileName =  [NSString stringWithFormat:@"Sign/sign_%@_.png",_name];
+            
+            NSString *temp_sign = [AppUtility getObjectForKey:@"sign_count"];
+            int i ;
+            if (temp_sign.length == 0)
+            {
+                i = 0;
+            }
+            else
+            {
+                i = temp_sign.intValue;
+            }
+            i++;
+            NSString *count = [NSString stringWithFormat:@"%d",i];
+            [AppUtility storeObject:count forKey:@"sign_count"];
+
+            
+            
+        }
+        else//临时签到
+        {
+            fileName = [NSString stringWithFormat:@"Temp_Sign/temp%@.png",[AppUtility timeStample]];
+        }
         [data writeToFile:DOCUMENTS_PATH(fileName) atomically:YES];
     }
     
 }
+
+
+- (void)_setupManager
+{
+    NSString *server = [AppUtility getObjectForKey:@"server"];
+    if(server.length == 0)
+    {
+        [AppUtility showAlert:@"提示" message:@"还未设置FTP服务器"];
+        return;
+    }
+    NSString *port = [AppUtility getObjectForKey:@"port"];
+    NSString *uid = [AppUtility getObjectForKey:@"user"];
+    NSString *pw = [AppUtility getObjectForKey:@"pw"];
+    
+    NSString *url = nil;
+    if(![server hasPrefix:@"ftp://"])
+    {
+        url = [NSString stringWithFormat:@"ftp://%@:%@",server,port];
+    }
+    else
+    {
+        url = [NSString stringWithFormat:@"%@:%@",server,port];
+    }
+    
+    if (self.requestsManager == nil)
+    {
+        self.requestsManager = [[GRRequestsManager alloc] initWithHostname:url
+                                                                      user:uid
+                                                                  password:pw];
+        self.requestsManager.delegate = self;
+        
+    }
+}
+
+
+- (void)uploadToFTP
+{
+    
+    [self _setupManager];
+    
+    NSString *server = [AppUtility getObjectForKey:@"server"];
+   // DLog(@"server = %@",server);
+    if(server.length == 0)
+    {
+        return;
+    }
+    
+    timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timeOut:) userInfo:nil repeats:YES];
+    
+    [self showMBLoadingWithMessage:@"上传中..."];
+    NSData *data = UIImagePNGRepresentation(photo);
+    NSString *fileName = [NSString stringWithFormat:@"%@.png",[AppUtility timeStample]];
+    [data writeToFile:CACH_DOCUMENTS_PATH(fileName) atomically:YES];
+    NSString *remotepath = [NSString stringWithFormat:@"photo/%@",[fileName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+   // DLog(@"remotePath = %@",remotepath);
+    [self.requestsManager addRequestForUploadFileAtLocalPath:CACH_DOCUMENTS_PATH(photoPath) toRemotePath:remotepath];
+    [self.requestsManager startProcessingRequests];
+}
+
+#pragma mark - FTP 代理方法
+
+- (void)requestsManager:(id<GRRequestsManagerProtocol>)requestsManager didCompleteUploadRequest:(id<GRDataExchangeRequestProtocol>)request
+{
+    // static int i = 0;
+    //  i++;
+    //  if (i%3 == 0)
+    // {
+    [self hideMBLoading];
+    [self showMBCompletedWithMessage:@"上传成功"];
+    //[self hideMBLoading];
+    //   i = 0;
+    [timer invalidate];
+    time = 0;
+    // }
+}
+
+- (void)timeOut:(NSTimer *)t
+{
+    time ++;
+    if (time>15)
+    {
+        time = 0;
+        [timer invalidate];
+        [self hideMBLoading];
+        [self showMBFailedWithMessage:@"超时,请稍后再试"];
+        [self savePhoto];
+    }
+    DLog(@"time = %d",time);
+}
+
+
+
+- (void)savePhoto
+{
+    NSData *data = UIImagePNGRepresentation(photo);
+    NSString *path = [NSString stringWithFormat:@"Temp_Photo/%@.png",[AppUtility timeStample]];
+    [data writeToFile:DOCUMENTS_PATH(path) atomically:YES];
+}
+
+- (void)requestsManager:(id<GRRequestsManagerProtocol>)requestsManager didFailRequest:(id<GRRequestProtocol>)request withError:(NSError *)error
+{
+    DLog(@"error code = %@",error.userInfo);
+    NSString *str = [error.userInfo objectForKey:@"message"];
+    if (![str isEqualToString:@"Can't overwrite directory!"])
+    {
+        
+    }
+    if ([str isEqualToString:@"Unknown error!"])
+    {
+        [self hideMBLoading];
+        [self showMBFailedWithMessage:@"请检查FTP设置"];
+        //[self hideMBLoading];
+    }
+    
+    if ([str isEqualToString:@"Not logged in."])
+    {
+        [self hideMBLoading];
+        [self showMBFailedWithMessage:@"用户名错误或密码错误"];
+    }
+}
+
+
+
+
+
 
 - (void)didReceiveMemoryWarning
 {
