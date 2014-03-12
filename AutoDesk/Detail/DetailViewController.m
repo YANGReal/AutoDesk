@@ -69,6 +69,8 @@
         SignViewController *signVC = [[SignViewController alloc] initWithNibName:@"SignViewController" bundle:nil];
         signVC.delegate = self;
         signVC.name = [_data stringAttribute:@"name"];
+        signVC.desk = [_data stringAttribute:@"desk"];
+        
         [self.navigationController pushViewController:signVC animated:YES];
     }
     else
@@ -239,8 +241,16 @@
 
 - (void)uploadToFTP
 {
-    
-    photoPath = [NSString stringWithFormat:@"%@_%@.png",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
+    NSString *choujiang = [_data stringAttribute:@"choujiang"];
+    if ([choujiang isEqualToString:@"N"])
+    {
+        photoPath = [NSString stringWithFormat:@"N_%@_%@.png",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
+    }
+    else
+    {
+        photoPath = [NSString stringWithFormat:@"%@_%@.png",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
+
+    }
     [self _setupManager];
     
     NSString *server = [AppUtility getObjectForKey:@"server"];
@@ -292,7 +302,7 @@
         [self showMBFailedWithMessage:@"超时,请稍后再试"];
         [self savePhoto];
     }
-    DLog(@"time = %d",time);
+    DLog(@"time = %ld",(long)time);
 }
 
 
@@ -303,14 +313,21 @@
     UIImage *img2 = self.imgView.image;
     UIImage *img  = [self addImageview:img1 toImage:img2];
     NSData *data = UIImagePNGRepresentation(img);
-    
-    NSString *path = [NSString stringWithFormat:@"Photo/N_%@_%@.png",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
+    NSString *choujiang = [_data stringAttribute:@"choujiang"];
+    if ([choujiang isEqualToString:@"N"])
+    {
+        NSString *path = [NSString stringWithFormat:@"Photo/N_%@_%@.png",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
+        [data writeToFile:DOCUMENTS_PATH(path) atomically:YES];
+        return;
+    }
+    NSString *path = [NSString stringWithFormat:@"Photo/%@_%@.png",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
     [data writeToFile:DOCUMENTS_PATH(path) atomically:YES];
 
 }
 
 - (void)requestsManager:(id<GRRequestsManagerProtocol>)requestsManager didFailRequest:(id<GRRequestProtocol>)request withError:(NSError *)error
 {
+    [self savePhoto];
     DLog(@"error code = %@",error.userInfo);
     NSString *str = [error.userInfo objectForKey:@"message"];
     if (![str isEqualToString:@"Can't overwrite directory!"])

@@ -29,7 +29,7 @@
 {
     [AppUtility createFolderAtPath:DOCUMENTS_PATH(@"Photo")];
     [AppUtility createFolderAtPath:DOCUMENTS_PATH(@"Sign")];
-    [AppUtility createFolderAtPath:DOCUMENTS_PATH(@"Temp_Photo")];
+    
     [AppUtility createFolderAtPath:DOCUMENTS_PATH(@"Temp_Sign")];
     
 }

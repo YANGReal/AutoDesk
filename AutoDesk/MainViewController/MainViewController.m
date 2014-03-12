@@ -14,7 +14,8 @@
 #import "SettingViewController.h"
 #import "YRDragView.h"
 #import "SignViewController.h"
-@interface MainViewController () <UISearchBarDelegate, UIAlertViewDelegate,TMQuiltViewDataSource,TMQuiltViewDelegate,UITextFieldDelegate,DetailViewControllerDelegate,SignViewControllerDelegate>
+#import "TempSignViewController.h"
+@interface MainViewController () <UISearchBarDelegate, UIAlertViewDelegate,TMQuiltViewDataSource,TMQuiltViewDelegate,UITextFieldDelegate,DetailViewControllerDelegate,TempSignViewController>
 {
     IBOutlet UILabel *label1;//总计
     IBOutlet UILabel *label2;//已拍照
@@ -25,7 +26,7 @@
 }
 
 @property (nonatomic, strong) TMQuiltView *mainTableView;
-@property (nonatomic, strong) NSArray *allDataArray;
+@property (nonatomic, strong) NSMutableArray *allDataArray;
 @property (nonatomic, strong) NSArray *searchDataArray;
 @property (nonatomic, assign) NSInteger currentMaxDisplayedCell;
 @property (nonatomic, strong) UILabel *countLabel;
@@ -58,7 +59,8 @@
             self.title = title;
         }
         //DLog(@"title = %@",title);
-        self.searchDataArray = [[NSArray alloc] init];
+        self.searchDataArray = [NSArray array];
+        self.allDataArray = [NSMutableArray array];
     }
     return self;
 }
@@ -68,6 +70,43 @@
     [super viewDidLoad];
     [self initDatabase];
     [self setupViews];
+    [self setExpireDate:10];
+}
+
+- (void)setExpireDate:(NSInteger)day
+{
+    
+    NSDate *date = [AppUtility dateAfterDay:10];
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd"];
+    NSString *future = [df stringFromDate:date];
+
+    NSString *expireDate = [AppUtility getObjectForKey:@"expireDate"];
+    if (expireDate.length == 0)
+    {
+        [AppUtility storeObject:future forKey:@"expireDate"];
+    }
+    else
+    {
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"yyyy-MM-dd"];
+        NSString *currentDate = [df stringFromDate:[NSDate date]];
+        if ([currentDate isEqualToString:expireDate])
+        {
+            UIView *maskView = [[UIView alloc] initWithFrame:self.view.bounds];
+            maskView.alpha = 0.7;
+            maskView.backgroundColor = [UIColor blackColor];
+            [self.navigationController.view addSubview:maskView];
+            UILabel *label = [[UILabel alloc] initWithFrame:RECT(0, 0, 200, 50)];
+            label.text = @"软件已过期";
+            label.textAlignment = NSTextAlignmentCenter;
+            label.font = [UIFont boldSystemFontOfSize:22];
+            label.textColor = [UIColor redColor];
+            label.center = self.view.center;
+            [self.navigationController.view addSubview:label];
+
+        }
+    }
 }
 
 
@@ -107,7 +146,7 @@
 
 - (void)statistics
 {
-   
+    [self.searchBar resignFirstResponder];
     [UIView animateWithDuration:0.3 animations:^{
             
             self.dragView.alpha = 1.0;
@@ -118,6 +157,7 @@
 
 - (IBAction)hiddenDragView:(id)sender
 {
+    [self.searchBar resignFirstResponder];
     [UIView animateWithDuration:0.3 animations:^{
         
         self.dragView.alpha = 0.0;
@@ -135,14 +175,14 @@
 - (IBAction)tempSign:(id)sender
 {
     [self.searchBar resignFirstResponder];
-    SignViewController *signVC = [[SignViewController alloc] initWithNibName:@"SignViewController" bundle:nil];
-    signVC.isTemp = YES;
+    TempSignViewController *signVC = [[TempSignViewController alloc] initWithNibName:@"TempSignViewController" bundle:nil];
+    
     signVC.delegate = self;
     [self.navigationController pushViewController:signVC animated:YES];
 }
 - (void)initDatabase
 {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"TestDB" ofType:@"sqlite"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"sqlite"];
     BOOL exist =[[NSFileManager defaultManager] fileExistsAtPath:DOCUMENTS_PATH(@"data.sqlite")];
     if (!exist)
     {
@@ -155,7 +195,13 @@
     }
     
     NSArray *data = [AppUtility dataFromDB:DOCUMENTS_PATH(@"data.sqlite") withQuery:@"select * from data"];
-    self.allDataArray = data;
+    for(NSDictionary *record in data)
+    {
+        if ([record stringAttribute:@"name"].length!=0)
+        {
+            [_allDataArray addObject:record];
+        }
+    }
     NSDictionary *colum = data[0];
     NSString *pinyin  = [colum stringAttribute:@"pinyin"];
     if (pinyin.length == 0)
@@ -256,8 +302,8 @@
 }
 
 
-#pragma mark - SignViewController delegate method
-- (void)goBackFromSignViewController
+#pragma mark - TempSignViewController delegate method
+- (void)goBackFromTempSignViewController
 {
     [self flushStatisticsData];
 }

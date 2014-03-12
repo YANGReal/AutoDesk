@@ -1,36 +1,45 @@
 //
-//  SignViewController.m
+//  TempSignViewController.m
 //  AutoDesk
 //
-//  Created by YANGRui on 14-3-10.
+//  Created by YANGReal on 14-3-12.
 //  Copyright (c) 2014年 YANGRui. All rights reserved.
 //
 
-#import "SignViewController.h"
+#import "TempSignViewController.h"
 #import "PPSSignatureView.h"
-@interface SignViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,GRRequestsManagerDelegate>
+#import "YRDragView.h"
+@interface TempSignViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate,GRRequestsManagerDelegate>
 {
     BOOL takePhoto;
     NSString *photoPath;
     UIImage *photo;
     NSTimer *timer;
     NSInteger time;
+    
+    UIImage *snap;
+
 }
 @property (weak , nonatomic) IBOutlet UIImageView  *imgView;
 @property (strong , nonatomic) PPSSignatureView  *signView;
 @property (strong , nonatomic) UIImageView *imgView2;
 @property (strong , nonatomic) GRRequestsManager *requestsManager;
+@property (weak , nonatomic) IBOutlet YRDragView *dragView;
+
+- (IBAction)save:(id)sender;
+
+- (IBAction)takePhoto:(id)sender;
 
 @end
 
-@implementation SignViewController
+@implementation TempSignViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = @"请在屏幕空白处签名";
+         self.title = @"请在屏幕空白处签名";
     }
     return self;
 }
@@ -38,20 +47,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
-    
+   // self.view.backgroundColor = [UIColor redColor];
     [self setupViews];
-  
+    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)setupViews
 {
+    
+    self.imgView2 = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    self.imgView2.contentMode = UIViewContentModeScaleAspectFit;
+    [self.view addSubview:self.imgView2];
     self.signView = [[PPSSignatureView alloc] initWithFrame:self.view.bounds];
     NSDictionary *colorDict = [AppUtility getObjectForKey:@"color"];
     if (colorDict == nil)
     {
-         self.signView.color = GLKColor(0, 0, 0);
+        self.signView.color = GLKColor(0, 0, 0);
     }
     else
     {
@@ -71,23 +82,18 @@
     }
     self.signView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.signView];
-    if (self.isTemp)
-    {
-        UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clear)];
-        UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithTitle:@"拍照" style:UIBarButtonItemStylePlain target:self action:@selector(takePhoto)];
-        
-        self.navigationItem.rightBarButtonItems = @[item1,item2];
-
-    }
-    else
-    {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clear)];
-    }
+    
+    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clear)];
+   // UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithTitle:@"拍照" style:UIBarButtonItemStylePlain target:self action:@selector(takePhoto)];
+    
+    self.navigationItem.rightBarButtonItems = @[item1];
+    [self.view bringSubviewToFront:self.dragView];
 }
 
 
 - (void)clear
 {
+    self.imgView2.image = [UIImage createImageWithColor:[UIColor clearColor]];
     [self.signView erase];
 }
 
@@ -101,106 +107,21 @@
     picker.delegate = self;
     picker.cameraDevice = UIImagePickerControllerCameraDeviceRear;
     [self presentViewController:picker animated:YES completion:nil];
-
+    
 }
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+- (IBAction)takePhoto:(id)sender
 {
-    takePhoto = NO;
-    photo = [info objectForKey:UIImagePickerControllerOriginalImage];
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self uploadToFTP];
-    }];
+    [self takePhoto];
 }
 
 
-
-
-
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+- (IBAction)save:(id)sender
 {
-    takePhoto = NO;
-    [self dismissViewControllerAnimated:YES completion:nil];
+    self.dragView.hidden = YES;
+    [self uploadToFTP];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    
-    [super viewWillDisappear:animated];
-    if (takePhoto)
-    {
-        return;
-    }
-    
-    
-    if (self.isTemp)
-    {
-        if ([self.signView hasSignature]||photo)//临时签到
-        {
-             DLog(@"已经签到");
-            NSString *temp_sign = [AppUtility getObjectForKey:@"temp_sign"];
-            int i ;
-            if (temp_sign.length == 0)
-            {
-                i = 0;
-            }
-            else
-            {
-                i = temp_sign.intValue;
-            }
-            i++;
-            NSString *count = [NSString stringWithFormat:@"%d",i];
-            [AppUtility storeObject:count forKey:@"temp_sign"];
-            
-            if ([self.delegate respondsToSelector:@selector(goBackFromSignViewController)])
-            {
-                [self.delegate goBackFromSignViewController];
-            }
-
-        }
-        else
-        {
-            DLog(@"未签到");
-        }
-    
-    }
-    
-    if ([self.signView hasSignature])
-    {
-        UIImage *img = [self.signView signatureImage];
-        NSData *data = UIImagePNGRepresentation(img);
-        
-        NSString *fileName = nil;
-        if (!self.isTemp)//签到
-        {
-           fileName =  [NSString stringWithFormat:@"Sign/sign_%@_%@.png",_name,_desk];
-            
-            NSString *temp_sign = [AppUtility getObjectForKey:@"sign_count"];
-            int i ;
-            if (temp_sign.length == 0)
-            {
-                i = 0;
-            }
-            else
-            {
-                i = temp_sign.intValue;
-            }
-            i++;
-            NSString *count = [NSString stringWithFormat:@"%d",i];
-            [AppUtility storeObject:count forKey:@"sign_count"];
-
-            
-            
-        }
-        else//临时签到
-        {
-            fileName = [NSString stringWithFormat:@"Temp_Sign/temp%@.png",[AppUtility timeStample]];
-        }
-        [data writeToFile:DOCUMENTS_PATH(fileName) atomically:YES];
-    }
-    
-}
 
 
 - (void)_setupManager
@@ -241,8 +162,24 @@
     
     [self _setupManager];
     
+     photoPath = [NSString stringWithFormat:@"%@.jpg",[AppUtility timeStample]];
+    
+    UIImage *sign = self.signView.signatureImage;
+    if (sign == nil)
+    {
+        sign = [UIImage createImageWithColor:[UIColor clearColor]];
+    }
+    self.imgView2.image = sign;
+    UIImage *pictue = photo;
+    if (pictue == nil)
+    {
+        pictue = [UIImage createImageWithColor:[UIColor clearColor]];
+    }
+    self.imgView.image = pictue;
+    snap = [UIImage imageFromView:self.view];
+
     NSString *server = [AppUtility getObjectForKey:@"server"];
-   // DLog(@"server = %@",server);
+    // DLog(@"server = %@",server);
     if(server.length == 0)
     {
         return;
@@ -251,11 +188,13 @@
     timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timeOut:) userInfo:nil repeats:YES];
     
     [self showMBLoadingWithMessage:@"上传中..."];
-    NSData *data = UIImagePNGRepresentation(photo);
-    NSString *fileName = [NSString stringWithFormat:@"%@.png",[AppUtility timeStample]];
-    [data writeToFile:CACH_DOCUMENTS_PATH(fileName) atomically:YES];
-    NSString *remotepath = [NSString stringWithFormat:@"photo/%@",[fileName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-   // DLog(@"remotePath = %@",remotepath);
+    NSData *data = UIImageJPEGRepresentation(snap, 1);//(snap);
+    DLog(@"data = %f kb",data.length/1024.0);
+  //  NSString *fileName = [NSString stringWithFormat:@"%@.png",[AppUtility timeStample]];
+    [data writeToFile:CACH_DOCUMENTS_PATH(photoPath) atomically:YES];
+    NSString *remotepath = [NSString stringWithFormat:@"photo/%@",[photoPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    DLog(@"localPath = %@",CACH_DOCUMENTS_PATH(photoPath));
+    DLog(@"remotePath = %@",remotepath);
     [self.requestsManager addRequestForUploadFileAtLocalPath:CACH_DOCUMENTS_PATH(photoPath) toRemotePath:remotepath];
     [self.requestsManager startProcessingRequests];
 }
@@ -264,14 +203,9 @@
 
 - (void)requestsManager:(id<GRRequestsManagerProtocol>)requestsManager didCompleteUploadRequest:(id<GRDataExchangeRequestProtocol>)request
 {
-    // static int i = 0;
-    //  i++;
-    //  if (i%3 == 0)
-    // {
     [self hideMBLoading];
     [self showMBCompletedWithMessage:@"上传成功"];
-    //[self hideMBLoading];
-    //   i = 0;
+    self.dragView.hidden = NO;
     [timer invalidate];
     time = 0;
     // }
@@ -295,14 +229,21 @@
 
 - (void)savePhoto
 {
-    NSData *data = UIImagePNGRepresentation(photo);
-    NSString *path = [NSString stringWithFormat:@"Temp_Photo/%@.png",[AppUtility timeStample]];
+    self.dragView.hidden = NO;
+    NSData *data = UIImagePNGRepresentation(snap);
+    NSString *path = [NSString stringWithFormat:@"Temp_Sign/%@.png",[AppUtility timeStample]];
+   // DLog(@"path = %@",path);
     [data writeToFile:DOCUMENTS_PATH(path) atomically:YES];
 }
 
 - (void)requestsManager:(id<GRRequestsManagerProtocol>)requestsManager didFailRequest:(id<GRRequestProtocol>)request withError:(NSError *)error
 {
     DLog(@"error code = %@",error.userInfo);
+    [self hideMBLoading];
+    [self showMBFailedWithMessage:@"上传失败"];
+    
+    [timer invalidate];
+    [self savePhoto];
     NSString *str = [error.userInfo objectForKey:@"message"];
     if (![str isEqualToString:@"Can't overwrite directory!"])
     {
@@ -323,9 +264,61 @@
 }
 
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+
+    if (takePhoto)
+    {
+        return;
+    }
+    
+    if ([self.signView hasSignature]||photo)
+    {
+        DLog(@"签到");
+        NSString *temp_sign = [AppUtility getObjectForKey:@"temp_sign"];
+        int i ;
+        if (temp_sign.length == 0)
+        {
+            i = 0;
+        }
+        else
+        {
+            i = temp_sign.intValue;
+        }
+        i++;
+        NSString *count = [NSString stringWithFormat:@"%d",i];
+        [AppUtility storeObject:count forKey:@"temp_sign"];
+
+        if([self.delegate respondsToSelector:@selector(goBackFromTempSignViewController)])
+        {
+            [self.delegate goBackFromTempSignViewController];
+        }
+
+        
+    }
+    else
+    {
+        DLog(@"未签到");
+    }
+}
 
 
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    takePhoto = NO;
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    
+    takePhoto = NO;
+    photo = [info objectForKey:UIImagePickerControllerOriginalImage];
+    self.imgView.image = photo;
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (void)didReceiveMemoryWarning
 {

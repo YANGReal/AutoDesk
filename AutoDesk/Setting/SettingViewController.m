@@ -254,6 +254,15 @@
         [AppUtility storeObject:userNameField.text forKey:@"user"];
         [AppUtility storeObject:passwordField.text forKey:@"pw"];
         [self setupFTPServer];
+        
+        for (UIView *view in self.view.subviews)
+        {
+            if ([view isKindOfClass:[UITextField class]])
+            {
+                [view resignFirstResponder];
+            }
+        }
+        
     }
     
 }
@@ -297,8 +306,20 @@
 
 - (void)requestsManager:(id<GRRequestsManagerProtocol>)requestsManager didFailRequest:(id<GRRequestProtocol>)request withError:(NSError *)error
 {
-    [self hideMBLoading];
-    [self showMBFailedWithMessage:@"FTP设置失败"];
+    DLog(@"error = %@",error.userInfo);
+    NSDictionary *dict = error.userInfo;
+    if ([[dict stringAttribute:@"message"] isEqualToString:@"Can't overwrite directory!"])
+    {
+        isConnected = YES;
+        [self hideMBLoading];
+        [self showMBFailedWithMessage:@"FTP设置成功"];
+    }
+    else
+    {
+        [self hideMBLoading];
+        [self showMBFailedWithMessage:@"FTP设置失败"];
+
+    }
 }
 
 - (void)hideLoding
