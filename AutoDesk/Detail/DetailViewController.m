@@ -304,7 +304,7 @@
     UIImage *img  = [self addImageview:img1 toImage:img2];
     NSData *data = UIImagePNGRepresentation(img);
     
-    NSString *path = [NSString stringWithFormat:@"N_%@_%@.png",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
+    NSString *path = [NSString stringWithFormat:@"Photo/N_%@_%@.png",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
     [data writeToFile:DOCUMENTS_PATH(path) atomically:YES];
 
 }
