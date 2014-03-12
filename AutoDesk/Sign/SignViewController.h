@@ -13,7 +13,7 @@
 @optional
 
 - (void)passSignImage:(UIImage *)image;
-
+- (void)goBackFromSignViewController;
 @end
 
 @interface SignViewController : YRBaseViewController

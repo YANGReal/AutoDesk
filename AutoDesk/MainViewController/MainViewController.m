@@ -14,7 +14,7 @@
 #import "SettingViewController.h"
 #import "YRDragView.h"
 #import "SignViewController.h"
-@interface MainViewController () <UISearchBarDelegate, UIAlertViewDelegate,TMQuiltViewDataSource,TMQuiltViewDelegate,UITextFieldDelegate,DetailViewControllerDelegate>
+@interface MainViewController () <UISearchBarDelegate, UIAlertViewDelegate,TMQuiltViewDataSource,TMQuiltViewDelegate,UITextFieldDelegate,DetailViewControllerDelegate,SignViewControllerDelegate>
 {
     IBOutlet UILabel *label1;//总计
     IBOutlet UILabel *label2;//已拍照
@@ -137,6 +137,7 @@
     [self.searchBar resignFirstResponder];
     SignViewController *signVC = [[SignViewController alloc] initWithNibName:@"SignViewController" bundle:nil];
     signVC.isTemp = YES;
+    signVC.delegate = self;
     [self.navigationController pushViewController:signVC animated:YES];
 }
 - (void)initDatabase
@@ -254,6 +255,12 @@
     [self flushStatisticsData];
 }
 
+
+#pragma mark - SignViewController delegate method
+- (void)goBackFromSignViewController
+{
+    [self flushStatisticsData];
+}
 
 - (void)flushStatisticsData
 {

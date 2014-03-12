@@ -152,6 +152,11 @@
             i++;
             NSString *count = [NSString stringWithFormat:@"%d",i];
             [AppUtility storeObject:count forKey:@"temp_sign"];
+            
+            if ([self.delegate respondsToSelector:@selector(goBackFromSignViewController)])
+            {
+                [self.delegate goBackFromSignViewController];
+            }
 
         }
         else
