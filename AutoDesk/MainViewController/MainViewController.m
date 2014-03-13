@@ -71,8 +71,7 @@
     [self initDatabase];
     [self setupViews];
     [self setExpireDate:10];
-   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchWithText:) name:UITextFieldTextDidChangeNotification object:_searchBar.text];
-    self.searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
+      self.searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
    [self.searchBar addTarget:self action:@selector(searchWithText:) forControlEvents:UIControlEventEditingChanged];
 }
 
@@ -115,12 +114,11 @@
 
 - (void)setupViews
 {
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+   
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:RECT(0, 0, 1024, 768)];
     imgView.contentMode = UIViewContentModeScaleToFill;
     [self.view insertSubview:imgView atIndex:0];
-    imgView.image = [UIImage imageWithContentsOfFile:DOCUMENTS_PATH(@"bg.png")];
-    //DLog(@"path = %@",CACH_DOCUMENTS_PATH(@"bg.png"));
-    //imgView.backgroundColor = [UIColor redColor];
+    imgView.image = [UIImage imageWithContentsOfFile:DOCUMENTS_PATH(@"bg1.png")];
     self.cancelBtn.enabled = NO;
     self.mainTableView = [[TMQuiltView alloc] initWithFrame:CGRectMake(0, 130, 1024, DEVICE_WIDTH - 130)];
     [self.mainTableView setDelegate:self];
