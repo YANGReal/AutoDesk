@@ -94,6 +94,7 @@
 
 - (void)back
 {
+    //if ()
     [self.delegate backFromDetailViewController:self];
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -181,6 +182,7 @@
     i++;
     NSString *count = [NSString stringWithFormat:@"%d",i];
     [AppUtility storeObject:count forKey:@"photo"];
+    self.isPhoto = YES;
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -192,7 +194,10 @@
 
 - (void)passSignImage:(UIImage *)image
 {
-    DLog(@"已经签名");
+    if (image)
+    {
+        self.isSign = YES;
+    }
 }
 
 -  (UIImage *)addImageview:(UIImage *)image1 toImage:(UIImage *)image2

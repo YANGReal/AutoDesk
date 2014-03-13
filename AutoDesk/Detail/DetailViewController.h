@@ -20,4 +20,7 @@
 @interface DetailViewController : YRBaseViewController
 @property (strong , nonatomic) NSDictionary *data;
 @property (assign , nonatomic) id<DetailViewControllerDelegate>delegate;
+    
+@property (assign , nonatomic) BOOL isSign;
+@property (assign , nonatomic) BOOL isPhoto;
 @end

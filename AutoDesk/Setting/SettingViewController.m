@@ -247,6 +247,7 @@
     [AppUtility removeObjectForkey:@"photo"];
     [AppUtility removeObjectForkey:@"temp_sign"];
     [AppUtility removeObjectForkey:@"sign_count"];
+    [[NSFileManager defaultManager] removeItemAtPath:CACH_DOCUMENTS_PATH(@"data.plist") error:nil];
     [self showMBCompletedWithMessage:@"清除成功"];
 }
 

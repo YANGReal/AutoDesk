@@ -15,7 +15,7 @@
 #import "YRDragView.h"
 #import "SignViewController.h"
 #import "TempSignViewController.h"
-@interface MainViewController () <UISearchBarDelegate, UIAlertViewDelegate,TMQuiltViewDataSource,TMQuiltViewDelegate,UITextFieldDelegate,DetailViewControllerDelegate,TempSignViewController>
+@interface MainViewController () <UISearchBarDelegate, UIAlertViewDelegate,TMQuiltViewDataSource,TMQuiltViewDelegate,UITextFieldDelegate,DetailViewControllerDelegate,TempSignViewController,SignViewControllerDelegate>
 {
     IBOutlet UILabel *label1;//总计
     IBOutlet UILabel *label2;//已拍照
@@ -27,7 +27,7 @@
 
 @property (nonatomic, strong) TMQuiltView *mainTableView;
 @property (nonatomic, strong) NSMutableArray *allDataArray;
-@property (nonatomic, strong) NSArray *searchDataArray;
+@property (nonatomic, strong) NSMutableArray *searchDataArray;
 @property (nonatomic, assign) NSInteger currentMaxDisplayedCell;
 @property (nonatomic, strong) UILabel *countLabel;
 @property (weak , nonatomic) IBOutlet UITextField *searchBar;
@@ -59,8 +59,8 @@
             self.title = title;
         }
         //DLog(@"title = %@",title);
-        self.searchDataArray = [NSArray array];
-        self.allDataArray = [NSMutableArray array];
+        self.searchDataArray = [NSMutableArray array];
+        //self.allDataArray = [NSMutableArray array];
     }
     return self;
 }
@@ -168,7 +168,7 @@
 - (IBAction)cancelBtnClicked:(id)sender
 {
     self.searchBar.text = @"";
-    self.searchDataArray = nil;
+    [self.searchDataArray removeAllObjects];
     [self.searchBar resignFirstResponder];
     [self.mainTableView reloadData];
 }
@@ -196,13 +196,28 @@
     }
     
     NSArray *data = [AppUtility dataFromDB:DOCUMENTS_PATH(@"data.sqlite") withQuery:@"select * from data"];
-    
-    for(NSDictionary *record in data)
+    self.allDataArray = [NSKeyedUnarchiver unarchiveObjectWithFile:CACH_DOCUMENTS_PATH(@"data.plist")];
+    if (self.allDataArray.count == 0)
     {
-        if ([record stringAttribute:@"name"].length!=0)
+        self.allDataArray = [NSMutableArray array];
+        for(NSDictionary *record in data)
         {
-            [_allDataArray addObject:record];
+            if ([record stringAttribute:@"name"].length!=0)
+            {
+                
+                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                NSString *name = [record stringAttribute:@"name"];
+                NSString *desk = [record stringAttribute:@"desk"];
+                NSString *choujiang = [record stringAttribute:@"choujiang"];
+                [dict setObject:name forKey:@"name"];
+                [dict setObject:desk forKey:@"desk"];
+                [dict setObject:choujiang forKey:@"choujiang"];
+                [dict setObject:@"NO" forKey:@"sign"];
+                [dict setObject:@"NO" forKey:@"photo"];
+                [_allDataArray addObject:dict];
+            }
         }
+        [NSKeyedArchiver archiveRootObject:self.allDataArray toFile:CACH_DOCUMENTS_PATH(@"data.plist")];
     }
     DLog(@"data = %@",_allDataArray);
     NSDictionary *colum = _allDataArray[0];
@@ -322,6 +337,28 @@
 - (void)backFromDetailViewController:(DetailViewController *)vc
 {
     [self flushStatisticsData];
+    DLog(@"photo = %d",vc.isPhoto);
+    NSString *name = [vc.data stringAttribute:@"name"];
+    [self.searchDataArray removeAllObjects];
+    for (NSMutableDictionary *dict in self.allDataArray)
+    {
+        //if ([dict stringAttribute:@"uid"])
+        NSString *NAME = [dict stringAttribute:@"name"];
+        if ([NAME isEqualToString:name])
+        {
+            if (vc.isSign)
+            {
+                [dict setObject:@"YES" forKey:@"sign"];
+            }
+            if (vc.isPhoto)
+            {
+                 [dict setObject:@"YES" forKey:@"photo"];
+            }
+        }
+    }
+    [NSKeyedArchiver archiveRootObject:self.allDataArray toFile:CACH_DOCUMENTS_PATH(@"data.plist")];
+    self.searchBar.text = @"";
+    [self.mainTableView reloadData];
 }
 
 
@@ -406,17 +443,31 @@
 
     NSString *sql = [NSString stringWithFormat:@"select * from data where pinyin like '%@%%'", text];
     if (_searchDataArray.count != 0) {
-        self.searchDataArray = nil;
+        [self.searchDataArray removeAllObjects];
     }
-    self.searchDataArray = [AppUtility dataFromDB:DOCUMENTS_PATH(@"data.sqlite") withQuery:sql];
+   // self.searchDataArray = [AppUtility dataFromDB:DOCUMENTS_PATH(@"data.sqlite") withQuery:sql];
     
-    if (_searchDataArray.count == 0) {
-       // UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"无搜索结果,请重新搜索" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
-       // [alertView show];
-    }
-    else
+    NSArray *data = [AppUtility dataFromDB:DOCUMENTS_PATH(@"data.sqlite") withQuery:sql];
+    
+    if (data.count !=0 )
     {
-        [self.mainTableView reloadData];
+        for (NSDictionary *record in data)
+        {
+           
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            NSString *name = [record stringAttribute:@"name"];
+            NSString *desk = [record stringAttribute:@"desk"];
+            NSString *choujiang = [record stringAttribute:@"choujiang"];
+            [dict setObject:name forKey:@"name"];
+            [dict setObject:desk forKey:@"desk"];
+            [dict setObject:choujiang forKey:@"choujiang"];
+            [_searchDataArray addObject:dict];
+        }
+    }
+
+    
+    if (_searchDataArray.count != 0) {
+       [self.mainTableView reloadData];
     }
 }
 
@@ -430,6 +481,8 @@
     }
 }
 
+
+    
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

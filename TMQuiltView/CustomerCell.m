@@ -12,7 +12,8 @@
 
 @property (strong , nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong , nonatomic) IBOutlet UILabel *deskLabel;
-
+@property (strong , nonatomic) IBOutlet UIImageView *pen;
+@property (strong , nonatomic) IBOutlet UIImageView *photoView;
 @end
 
 @implementation CustomerCell
@@ -39,6 +40,25 @@
 {
     self.nameLabel.text = [_data stringAttribute:@"name"];
     self.deskLabel.text = [_data stringAttribute:@"desk"];
+    NSString *sign = [_data stringAttribute:@"sign"];
+    if ([sign isEqualToString:@"YES"])
+    {
+        self.pen.hidden = NO;
+    }
+    else
+    {
+        self.pen.hidden = YES;
+    }
+    NSString *photo = [_data stringAttribute:@"photo"];
+    if ([photo isEqualToString:@"YES"])
+    {
+        self.photoView.hidden = NO;
+    }
+    else
+    {
+        self.photoView.hidden = YES;
+    }
+
 }
 
 /*
