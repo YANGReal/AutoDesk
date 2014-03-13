@@ -19,6 +19,7 @@
   
     NSInteger time;
     NSTimer *timer;
+    int timeOut;
 
 }
 @property (weak , nonatomic) IBOutlet YRDragLabel *label;
@@ -58,6 +59,16 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"签名" style:UIBarButtonItemStylePlain target:self action:@selector(sign)];
+    
+    NSString *str = [AppUtility getObjectForKey:@"timeOut"];
+    if (str.length == 0)
+    {
+        timeOut = 15;
+    }
+    else
+    {
+        timeOut = str.intValue;
+    }
     
 }
 
@@ -244,11 +255,11 @@
     NSString *choujiang = [_data stringAttribute:@"choujiang"];
     if ([choujiang isEqualToString:@"N"])
     {
-        photoPath = [NSString stringWithFormat:@"N_%@_%@.png",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
+        photoPath = [NSString stringWithFormat:@"N_%@_%@.jpg",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
     }
     else
     {
-        photoPath = [NSString stringWithFormat:@"%@_%@.png",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
+        photoPath = [NSString stringWithFormat:@"%@_%@.jpg",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
 
     }
     [self _setupManager];
@@ -266,7 +277,7 @@
     UIImage *img1 = [UIImage imageFromView:_label];
     UIImage *img2 = self.imgView.image;
     UIImage *img  = [self addImageview:img1 toImage:img2];
-    NSData *data = UIImagePNGRepresentation(img);
+    NSData *data = UIImageJPEGRepresentation(img, 0.75);
     [data writeToFile:CACH_DOCUMENTS_PATH(photoPath) atomically:YES];
     NSString *remotepath = [NSString stringWithFormat:@"photo/%@",[photoPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     DLog(@"remotePath = %@",remotepath);
@@ -294,7 +305,7 @@
 - (void)timeOut:(NSTimer *)t
 {
     time ++;
-    if (time>15)
+    if (time>timeOut)
     {
         time = 0;
         [timer invalidate];

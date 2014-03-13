@@ -33,6 +33,9 @@
     IBOutlet UITextField *passwordField;
     IBOutlet UITextField *titleField;
     
+    IBOutlet UISlider *timeOut;
+    IBOutlet UILabel *timeLabel;
+    
     BOOL isConnected;
 }
 
@@ -48,6 +51,11 @@
 - (IBAction)switcher:(UISwitch *)sender;
 
 - (IBAction)saveUpload:(id)sender;
+
+- (IBAction)restoreTongjiData:(id)sender;
+
+
+- (IBAction)timeOutSlider:(UISlider *)sender;
 
 @end
 
@@ -167,6 +175,17 @@
         passwordField.text = pw;
     }
     
+    NSString *time = [AppUtility getObjectForKey:@"timeOut"];
+    if (time.length == 0)
+    {
+        timeLabel.text = @"15秒";
+        timeOut.value = 15;
+    }
+    else
+    {
+        timeLabel.text = [NSString stringWithFormat:@"%@秒",time];
+        timeOut.value = time.floatValue;
+    }
     
     
 }
@@ -223,6 +242,25 @@
     [alert show];
 }
 
+- (IBAction)restoreTongjiData:(id)sender
+{
+    [AppUtility removeObjectForkey:@"photo"];
+    [AppUtility removeObjectForkey:@"temp_sign"];
+    [AppUtility removeObjectForkey:@"sign_count"];
+    [self showMBCompletedWithMessage:@"清除成功"];
+}
+
+
+- (IBAction)timeOutSlider:(UISlider *)sender
+{
+    NSString *str = [NSString stringWithFormat:@"%d",(int)sender.value];
+    timeLabel.text = [NSString stringWithFormat:@"%@秒",str];
+    [AppUtility storeObject:str forKey:@"timeOut"];
+    
+}
+
+
+#pragma mark - UIAlertView method
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
