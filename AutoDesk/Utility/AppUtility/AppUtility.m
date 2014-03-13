@@ -96,6 +96,14 @@
 }
 
 
++(void)showAlert:(NSString *)title message:(NSString *)message
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"好", nil];
+    [alert show];
+}
+
+
+
 #pragma mark - MD5加密
 
 + (NSString *)md5String:(NSString *)str
@@ -139,6 +147,26 @@
     }
     [db close];
     return NO;
+}
+
++ (BOOL)createFolderAtPath:(NSString *)path
+{
+    BOOL isDir = NO;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL existed = [fileManager fileExistsAtPath:path isDirectory:&isDir];
+    if ( !(isDir == YES && existed == YES) )
+    {
+       return  [fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return NO;
+}
+
++ (NSString *)timeStample
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];//@"yyyy-MM-dd-HH:mm:ss"
+    NSString *destDateString = [dateFormatter stringFromDate:[NSDate date]];
+    return destDateString;
 }
 
 

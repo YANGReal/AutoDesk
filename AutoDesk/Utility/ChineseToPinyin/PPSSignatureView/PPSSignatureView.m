@@ -1,7 +1,7 @@
 #import "PPSSignatureView.h"
 
-#define             STROKE_WIDTH_MIN 0.002 // Stroke width determined by touch velocity
-#define             STROKE_WIDTH_MAX 0.010
+#define             STROKE_WIDTH_MIN 0.002 // 0.002 Stroke width determined by touch velocity
+#define             STROKE_WIDTH_MAX 0.01 //0.01
 #define       STROKE_WIDTH_SMOOTHING 0.5   // Low pass filter alpha
 
 #define           VELOCITY_CLAMP_MIN 20
@@ -12,7 +12,7 @@
 #define             MAXIMUM_VERTECES 100000
 
 
-static GLKVector3 StrokeColor = { 0, 0, 0 };
+//static GLKVector3 StrokeColor = { 0, 0, 0 };
 
 // Vertex structure containing 3D point and color
 struct PPSSignaturePoint
@@ -119,7 +119,11 @@ static PPSSignaturePoint ViewPointToGL(CGPoint viewPoint, CGRect bounds, GLKVect
     
     if (context) {
         time(NULL);
-        
+        //DLog(@"self.color = (%f,%f,%f)",self.strokeColor.r,self.strokeColor.g,self.strokeColor.b);
+        if (self.fontWidth == 0)
+        {
+            self.fontWidth = STROKE_WIDTH_MAX*1.0;
+        }
         self.context = context;
         self.drawableDepthFormat = GLKViewDrawableDepthFormat24;
 		self.enableSetNeedsDisplay = YES;
@@ -177,7 +181,8 @@ static PPSSignaturePoint ViewPointToGL(CGPoint viewPoint, CGRect bounds, GLKVect
 
 - (void)drawRect:(CGRect)rect
 {
-    glClearColor(1, 1, 1, 1.0f);
+    glClearColor(0.0, 0.0, 0.0, 0.0f);
+    //[UIColor clearColor];
     glClear(GL_COLOR_BUFFER_BIT);
 
     [effect prepareToDraw];
@@ -228,7 +233,7 @@ static PPSSignaturePoint ViewPointToGL(CGPoint viewPoint, CGRect bounds, GLKVect
         addVertex(&dotsLength, touchPoint);
         
         PPSSignaturePoint centerPoint = touchPoint;
-        centerPoint.color = StrokeColor;
+        centerPoint.color = self.color;
         addVertex(&dotsLength, centerPoint);
 
         static int segments = 20;
@@ -258,7 +263,7 @@ static PPSSignaturePoint ViewPointToGL(CGPoint viewPoint, CGRect bounds, GLKVect
 
 
 - (void)longPress:(UILongPressGestureRecognizer *)lp {
-    [self erase];
+    //[self erase];
 }
 
 - (void)pan:(UIPanGestureRecognizer *)p {
@@ -279,7 +284,7 @@ static PPSSignaturePoint ViewPointToGL(CGPoint viewPoint, CGRect bounds, GLKVect
     float normalizedVelocity = (clampedVelocityMagnitude - VELOCITY_CLAMP_MIN) / (VELOCITY_CLAMP_MAX - VELOCITY_CLAMP_MIN);
     
     float lowPassFilterAlpha = STROKE_WIDTH_SMOOTHING;
-    float newThickness = (STROKE_WIDTH_MAX - STROKE_WIDTH_MIN) * normalizedVelocity + STROKE_WIDTH_MIN;
+    float newThickness = (_fontWidth*0.01 - STROKE_WIDTH_MIN) * normalizedVelocity + STROKE_WIDTH_MIN;
     penThickness = penThickness * lowPassFilterAlpha + newThickness * (1 - lowPassFilterAlpha);
     
     if ([p state] == UIGestureRecognizerStateBegan) {
@@ -316,14 +321,14 @@ static PPSSignaturePoint ViewPointToGL(CGPoint viewPoint, CGRect bounds, GLKVect
                 
                 CGPoint quadPoint = QuadraticPointInCurve(previousMidPoint, mid, previousPoint, (float)i / (float)(segments));
                 
-                PPSSignaturePoint v = ViewPointToGL(quadPoint, self.bounds, StrokeColor);
+                PPSSignaturePoint v = ViewPointToGL(quadPoint, self.bounds, self.color);
                 [self addTriangleStripPointsForPrevious:previousVertex next:v];
                 
                 previousVertex = v;
             }
         } else if (distance > 1.0) {
             
-            PPSSignaturePoint v = ViewPointToGL(l, self.bounds, StrokeColor);
+            PPSSignaturePoint v = ViewPointToGL(l, self.bounds, self.color);
             [self addTriangleStripPointsForPrevious:previousVertex next:v];
             
             previousVertex = v;            
@@ -419,7 +424,7 @@ static PPSSignaturePoint ViewPointToGL(CGPoint viewPoint, CGRect bounds, GLKVect
                 
         PPSSignaturePoint stripPoint = {
             { p1.x + difX, p1.y + difY, 0.0 },
-            StrokeColor
+            self.color
         };
         addVertex(&length, stripPoint);
         

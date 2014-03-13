@@ -10,7 +10,7 @@
 
 @interface AppUtility : NSObject
 
-
++ (void)showAlert:(NSString *)title message:(NSString *)message;
 
 /*验证邮箱*/
 + (BOOL)isValidateEmail:(NSString *)email;
@@ -48,5 +48,10 @@
 /*对数据库进行操作*/
 
 + (BOOL)updateDB:(NSString *)path WithSQL:(NSString *)sql;
+
++ (BOOL)createFolderAtPath:(NSString *)path;
+
++ (NSString *)timeStample;
+
 
 @end
