@@ -304,6 +304,7 @@
     if ([self.currentRequest isKindOfClass:[GRUploadRequest class]]) {
         NSString *localFilepath = ((GRUploadRequest *)self.currentRequest).localFilePath;
         _currentUploadData = [NSData dataWithContentsOfFile:localFilepath];
+        //NSLog(@"length = %lu",(unsigned long)_currentUploadData.length/1024);
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{

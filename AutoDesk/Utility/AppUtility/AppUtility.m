@@ -164,7 +164,7 @@
 + (NSString *)timeStample
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd-HH:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];//@"yyyy-MM-dd-HH:mm:ss"
     NSString *destDateString = [dateFormatter stringFromDate:[NSDate date]];
     return destDateString;
 }

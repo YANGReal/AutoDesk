@@ -72,7 +72,8 @@
     [self setupViews];
     [self setExpireDate:10];
    // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchWithText:) name:UITextFieldTextDidChangeNotification object:_searchBar.text];
-    [self.searchBar addTarget:self action:@selector(searchWithText:) forControlEvents:UIControlEventEditingChanged];
+    self.searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
+   [self.searchBar addTarget:self action:@selector(searchWithText:) forControlEvents:UIControlEventEditingChanged];
 }
 
 - (void)setExpireDate:(NSInteger)day
@@ -188,8 +189,8 @@
     BOOL exist =[[NSFileManager defaultManager] fileExistsAtPath:DOCUMENTS_PATH(@"data.sqlite")];
     if (!exist)
     {
-        BOOL success = [[NSFileManager defaultManager] copyItemAtPath:path toPath:DOCUMENTS_PATH(@"data.sqlite") error:nil];
-        DLog(@"success = %d",success);
+       [[NSFileManager defaultManager] copyItemAtPath:path toPath:DOCUMENTS_PATH(@"data.sqlite") error:nil];
+       
     }
     else
     {
@@ -197,7 +198,7 @@
     }
     
     NSArray *data = [AppUtility dataFromDB:DOCUMENTS_PATH(@"data.sqlite") withQuery:@"select * from data"];
-   
+    
     for(NSDictionary *record in data)
     {
         if ([record stringAttribute:@"name"].length!=0)
@@ -205,16 +206,16 @@
             [_allDataArray addObject:record];
         }
     }
-
+    DLog(@"data = %@",_allDataArray);
     NSDictionary *colum = _allDataArray[0];
     NSString *pinyin  = [colum stringAttribute:@"pinyin"];
+    DLog(@"pinyin = %@",pinyin);
     if (pinyin.length == 0)
     {
         for (NSDictionary *dict in _allDataArray)
         {
             NSString *name = [dict stringAttribute:@"name"];
             if ([ChineseInclude isIncludeChineseInString:name]) {
-//            NSString *pinyin = [ChineseToPinyin pinyinFromChiniseString:name].lowercaseString;
             NSString *initial = [PinYinForObjc chineseConvertToPinYinHead:name];
 
             NSString *sql = [NSString stringWithFormat:@"update  data set pinyin = '%@' where name = '%@'",initial,name];
@@ -412,8 +413,8 @@
     self.searchDataArray = [AppUtility dataFromDB:DOCUMENTS_PATH(@"data.sqlite") withQuery:sql];
     
     if (_searchDataArray.count == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"无搜索结果,请重新搜索" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
-        [alertView show];
+       // UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"无搜索结果,请重新搜索" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
+       // [alertView show];
     }
     else
     {

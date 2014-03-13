@@ -66,6 +66,8 @@
 		14F59E4518CED135004CD0BB /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 14F59E4418CED135004CD0BB /* avatar.png */; };
 		6E217C9218CDEB62000250B7 /* YRDragLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E217C9118CDEB62000250B7 /* YRDragLabel.m */; };
 		6E217C9818CDFB39000250B7 /* YRDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E217C9718CDFB39000250B7 /* YRDragView.m */; };
+		6E280AC818D1DB880037A3FB /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E280AC618D1DB880037A3FB /* icon.png */; };
+		6E280AC918D1DB880037A3FB /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E280AC718D1DB880037A3FB /* icon@2x.png */; };
 		6E7EBBEF18D0A91400D51BF2 /* TempSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E7EBBED18D0A91400D51BF2 /* TempSignViewController.m */; };
 		6E7EBBF018D0A91400D51BF2 /* TempSignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E7EBBEE18D0A91400D51BF2 /* TempSignViewController.xib */; };
 		6E7EBBF318D0CDC600D51BF2 /* data.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 6E7EBBF218D0CDC600D51BF2 /* data.sqlite */; };
@@ -192,6 +194,8 @@
 		6E217C9118CDEB62000250B7 /* YRDragLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YRDragLabel.m; path = AutoDesk/YRDragLabel.m; sourceTree = "<group>"; };
 		6E217C9618CDFB39000250B7 /* YRDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YRDragView.h; sourceTree = "<group>"; };
 		6E217C9718CDFB39000250B7 /* YRDragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRDragView.m; sourceTree = "<group>"; };
+		6E280AC618D1DB880037A3FB /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		6E280AC718D1DB880037A3FB /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		6E7EBBEC18D0A91400D51BF2 /* TempSignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TempSignViewController.h; path = AutoDesk/Temp/TempSignViewController.h; sourceTree = "<group>"; };
 		6E7EBBED18D0A91400D51BF2 /* TempSignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TempSignViewController.m; path = AutoDesk/Temp/TempSignViewController.m; sourceTree = "<group>"; };
 		6E7EBBEE18D0A91400D51BF2 /* TempSignViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TempSignViewController.xib; path = AutoDesk/Temp/TempSignViewController.xib; sourceTree = "<group>"; };
@@ -341,6 +345,8 @@
 				1410A1FE18CD95B900965AF7 /* SignViewController */,
 				1410A21618CDBE6E00965AF7 /* Setting */,
 				141120FF18C98F4D00B15C7B /* Images.xcassets */,
+				6E280AC618D1DB880037A3FB /* icon.png */,
+				6E280AC718D1DB880037A3FB /* icon@2x.png */,
 				141120F418C98F4D00B15C7B /* Supporting Files */,
 			);
 			path = AutoDesk;
@@ -694,6 +700,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E7EBBF318D0CDC600D51BF2 /* data.sqlite in Resources */,
+				6E280AC918D1DB880037A3FB /* icon@2x.png in Resources */,
 				14F59E4518CED135004CD0BB /* avatar.png in Resources */,
 				1410A20A18CDB1B900965AF7 /* CustomerCell.xib in Resources */,
 				141120F818C98F4D00B15C7B /* InfoPlist.strings in Resources */,
@@ -704,6 +711,7 @@
 				A1FFDC6518D17A830056FF06 /* unicode_to_hanyu_pinyin.txt in Resources */,
 				1410A1F518CD817F00965AF7 /* DetailViewController.xib in Resources */,
 				1410A21818CDC46300965AF7 /* SettingViewController.xib in Resources */,
+				6E280AC818D1DB880037A3FB /* icon.png in Resources */,
 				6E7EBBF018D0A91400D51BF2 /* TempSignViewController.xib in Resources */,
 				1411210018C98F4D00B15C7B /* Images.xcassets in Resources */,
 				1410A21018CDBB4500965AF7 /* setting.png in Resources */,
@@ -891,14 +899,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: YANG JUNTAO (X3SYKVFKUJ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: YANG JUNTAO (X3SYKVFKUJ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AutoDesk/AutoDesk-Prefix.pch";
 				INFOPLIST_FILE = "AutoDesk/AutoDesk-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "FCACD195-1FA5-4F4D-9DCC-F0F92E60FBE6";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
@@ -909,19 +917,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-<<<<<<< HEAD
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Lin Zeng (WUGL4X3P3K)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Lin Zeng (WUGL4X3P3K)";
-=======
-				CODE_SIGN_IDENTITY = "iPhone Developer: YANG JUNTAO (X3SYKVFKUJ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: YANG JUNTAO (X3SYKVFKUJ)";
->>>>>>> FETCH_HEAD
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AutoDesk/AutoDesk-Prefix.pch";
 				INFOPLIST_FILE = "AutoDesk/AutoDesk-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "FCACD195-1FA5-4F4D-9DCC-F0F92E60FBE6";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};

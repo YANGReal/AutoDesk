@@ -164,7 +164,6 @@
                                                                       user:uid
                                                                   password:pw];
         self.requestsManager.delegate = self;
-        
     }
 }
 
@@ -200,14 +199,12 @@
     timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timeOut:) userInfo:nil repeats:YES];
     
     [self showMBLoadingWithMessage:@"上传中..."];
-    NSData *data = UIImageJPEGRepresentation(snap, 1);//(snap);
-    DLog(@"data = %f kb",data.length/1024.0);
-  //  NSString *fileName = [NSString stringWithFormat:@"%@.png",[AppUtility timeStample]];
+    NSData *data = UIImageJPEGRepresentation(snap, 0.75);//(snap);
     [data writeToFile:CACH_DOCUMENTS_PATH(photoPath) atomically:YES];
-    NSString *remotepath = [NSString stringWithFormat:@"photo/%@",[photoPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    DLog(@"localPath = %@",CACH_DOCUMENTS_PATH(photoPath));
-    DLog(@"remotePath = %@",remotepath);
-    [self.requestsManager addRequestForUploadFileAtLocalPath:CACH_DOCUMENTS_PATH(photoPath) toRemotePath:remotepath];
+    NSString *remotepath = [NSString stringWithFormat:@"temp/%@",[photoPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+   // DLog(@"remotePath = %@",remotepath);
+        NSString *localPath = [CACH_DOCUMENTS_PATH(photoPath) stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [self.requestsManager addRequestForUploadFileAtLocalPath:localPath toRemotePath:remotepath];
     [self.requestsManager startProcessingRequests];
 }
 
@@ -220,7 +217,9 @@
     self.dragView.hidden = NO;
     [timer invalidate];
     time = 0;
-    // }
+    [self clearAllImages];
+    
+    
 }
 
 - (void)timeOut:(NSTimer *)t
@@ -273,6 +272,16 @@
         [self hideMBLoading];
         [self showMBFailedWithMessage:@"用户名错误或密码错误"];
     }
+    [self clearAllImages];
+    
+}
+    
+    
+- (void)clearAllImages
+{
+    [self.signView erase];
+    self.imgView2.image = [UIImage createImageWithColor:[UIColor clearColor]];
+    self.imgView.image = [UIImage createImageWithColor:[UIColor clearColor]];
 }
 
 

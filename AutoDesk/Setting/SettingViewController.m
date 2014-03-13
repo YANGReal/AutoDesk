@@ -330,6 +330,7 @@
     self.requestsManager.delegate = self;
     
     [self.requestsManager addRequestForCreateDirectoryAtPath:@"photo/"];
+    [self.requestsManager addRequestForCreateDirectoryAtPath:@"temp/"];
     [self.requestsManager startProcessingRequests];
     [self performSelector:@selector(hideLoding) withObject:nil afterDelay:6.0];
 }
