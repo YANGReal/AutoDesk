@@ -20,6 +20,7 @@
 #import "MBProgressHUD.h"
 #import "GRRequestsManager.h"
 #import "YRBaseViewController.h"
+#import "PinYin4Objc.h"
 #define RECT(x,y,w,h) CGRectMake(x,y,w,h)
 #define POINT(x,y) CGPointMake(x,y)
 
