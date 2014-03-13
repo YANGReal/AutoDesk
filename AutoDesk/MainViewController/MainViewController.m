@@ -71,6 +71,8 @@
     [self initDatabase];
     [self setupViews];
     [self setExpireDate:10];
+   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchWithText:) name:UITextFieldTextDidChangeNotification object:_searchBar.text];
+    [self.searchBar addTarget:self action:@selector(searchWithText:) forControlEvents:UIControlEventEditingChanged];
 }
 
 - (void)setExpireDate:(NSInteger)day
@@ -195,6 +197,7 @@
     }
     
     NSArray *data = [AppUtility dataFromDB:DOCUMENTS_PATH(@"data.sqlite") withQuery:@"select * from data"];
+   
     for(NSDictionary *record in data)
     {
         if ([record stringAttribute:@"name"].length!=0)
@@ -202,21 +205,42 @@
             [_allDataArray addObject:record];
         }
     }
-    NSDictionary *colum = data[0];
+
+    NSDictionary *colum = _allDataArray[0];
     NSString *pinyin  = [colum stringAttribute:@"pinyin"];
     if (pinyin.length == 0)
     {
-        for (NSDictionary *dict in data)
+        for (NSDictionary *dict in _allDataArray)
         {
             NSString *name = [dict stringAttribute:@"name"];
-            NSString *pinyin = [ChineseToPinyin pinyinFromChiniseString:name].lowercaseString;
-            NSString *sql = [NSString stringWithFormat:@"update  data set pinyin = '%@' where name = '%@'",pinyin,name];
+            if ([ChineseInclude isIncludeChineseInString:name]) {
+//            NSString *pinyin = [ChineseToPinyin pinyinFromChiniseString:name].lowercaseString;
+            NSString *initial = [PinYinForObjc chineseConvertToPinYinHead:name];
+
+            NSString *sql = [NSString stringWithFormat:@"update  data set pinyin = '%@' where name = '%@'",initial,name];
             [AppUtility updateDB:DOCUMENTS_PATH(@"data.sqlite") WithSQL:sql];
+            }
+            else
+            {
+                NSArray *words = [name componentsSeparatedByString:@" "];
+
+                NSString *str = [[NSString alloc]init];
+                for (NSString *word in words)
+                {
+                    if ([word isEqual:@""]) {
+                        continue;
+                    }
+                    char j = [word characterAtIndex:0];
+                    str = [str stringByAppendingString:[NSString stringWithFormat:@"%c", j]];
+                }
+                NSString *sql = [NSString stringWithFormat:@"update  data set pinyin = '%@' where name = '%@'",str,name];
+                [AppUtility updateDB:DOCUMENTS_PATH(@"data.sqlite") WithSQL:sql];
+            }
         }
+        
     }
     [self flushStatisticsData];
-    
-    
+//    DLog(@"data = %@", _allDataArray);
 }
 
 #pragma mark *****UITableViewDelegate*****
@@ -356,7 +380,8 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self searchWithText:textField.text];
+    [self searchWithText:textField];
+    [self.searchBar resignFirstResponder];
     return YES;
 }
 
@@ -365,23 +390,25 @@
     self.cancelBtn.enabled = YES;
 }
 
-
-
-- (void)searchWithText:(NSString *)text
+- (void)searchWithText:(UITextField *) sender
 {
+    NSString *text = sender.text;
     if (text.length == 0)
     {
         return;
     }
-    NSString *string = [[NSString alloc] init];
+    NSString *wildcard = [[NSString alloc] init];
+
     for (int i = 0; i < (int)text.length; i ++) {
         char j = [text characterAtIndex:i];
-        string = [string stringByAppendingString:[NSString stringWithFormat:@"%%%c", j]];
+        wildcard = [wildcard stringByAppendingString:[NSString stringWithFormat:@"%c%%",  j]];
     }
     self.cancelBtn.enabled = YES;
-    NSString *wildcard = [NSString stringWithFormat:@"%@%%", string];
-    
-    NSString *sql = [NSString stringWithFormat:@"select * from data where pinyin like '%@'", wildcard];
+
+    NSString *sql = [NSString stringWithFormat:@"select * from data where pinyin like '%@%%'", text];
+    if (_searchDataArray.count != 0) {
+        self.searchDataArray = nil;
+    }
     self.searchDataArray = [AppUtility dataFromDB:DOCUMENTS_PATH(@"data.sqlite") withQuery:sql];
     
     if (_searchDataArray.count == 0) {
@@ -392,10 +419,7 @@
     {
         [self.mainTableView reloadData];
     }
-    [self.searchBar resignFirstResponder];
-
 }
-
 
 #pragma mark -UIAlertViewDelegate method
 

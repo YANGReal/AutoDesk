@@ -16,7 +16,7 @@
     UIImage *photo;
     NSTimer *timer;
     NSInteger time;
-    
+    int timeOut;
     UIImage *snap;
 
 }
@@ -88,6 +88,18 @@
     
     self.navigationItem.rightBarButtonItems = @[item1];
     [self.view bringSubviewToFront:self.dragView];
+    
+    
+    NSString *str = [AppUtility getObjectForKey:@"timeOut"];
+    if (str.length == 0)
+    {
+        timeOut = 15;
+    }
+    else
+    {
+        timeOut = str.intValue;
+    }
+
 }
 
 
@@ -214,7 +226,7 @@
 - (void)timeOut:(NSTimer *)t
 {
     time ++;
-    if (time>15)
+    if (time>timeOut)
     {
         time = 0;
         [timer invalidate];
