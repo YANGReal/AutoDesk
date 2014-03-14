@@ -294,7 +294,7 @@
     {
         cell.data = _searchDataArray[indexPath.row];
     }
-
+//
     return cell;
 }
 
