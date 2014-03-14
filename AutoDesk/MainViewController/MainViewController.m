@@ -249,7 +249,7 @@
 
 - (NSInteger)quiltViewNumberOfCells:(TMQuiltView *)TMQuiltView
 {
-    if (_searchDataArray.count == 0)
+    if (_searchBar.text.length == 0)
     {
         self.cancelBtn.enabled = NO;
         return _allDataArray.count;
@@ -287,14 +287,13 @@
     {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomerCell" owner:self options:nil] lastObject];
     }
-    if (_searchDataArray.count == 0) {
+    if (_searchBar.text.length == 0) {
         cell.data = _allDataArray[indexPath.row];
     }
     else
     {
         cell.data = _searchDataArray[indexPath.row];
     }
-//
     return cell;
 }
 
@@ -384,8 +383,10 @@
     [self searchWithText:textField];
     
     if (_searchDataArray.count == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"无搜索结果,请重新搜索" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"无匹配结果,请重新搜索" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
         [alertView show];
+        self.searchBar.text = nil;
+        [self.mainTableView reloadData];
     }
     else
     {
