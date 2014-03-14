@@ -68,6 +68,7 @@
 		6E217C9818CDFB39000250B7 /* YRDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E217C9718CDFB39000250B7 /* YRDragView.m */; };
 		6E280AC818D1DB880037A3FB /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E280AC618D1DB880037A3FB /* icon.png */; };
 		6E280AC918D1DB880037A3FB /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E280AC718D1DB880037A3FB /* icon@2x.png */; };
+		6E280ACB18D201510037A3FB /* pen.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E280ACA18D201510037A3FB /* pen.png */; };
 		6E7EBBEF18D0A91400D51BF2 /* TempSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E7EBBED18D0A91400D51BF2 /* TempSignViewController.m */; };
 		6E7EBBF018D0A91400D51BF2 /* TempSignViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E7EBBEE18D0A91400D51BF2 /* TempSignViewController.xib */; };
 		6E7EBBF318D0CDC600D51BF2 /* data.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 6E7EBBF218D0CDC600D51BF2 /* data.sqlite */; };
@@ -196,6 +197,7 @@
 		6E217C9718CDFB39000250B7 /* YRDragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YRDragView.m; sourceTree = "<group>"; };
 		6E280AC618D1DB880037A3FB /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		6E280AC718D1DB880037A3FB /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		6E280ACA18D201510037A3FB /* pen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pen.png; sourceTree = "<group>"; };
 		6E7EBBEC18D0A91400D51BF2 /* TempSignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TempSignViewController.h; path = AutoDesk/Temp/TempSignViewController.h; sourceTree = "<group>"; };
 		6E7EBBED18D0A91400D51BF2 /* TempSignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TempSignViewController.m; path = AutoDesk/Temp/TempSignViewController.m; sourceTree = "<group>"; };
 		6E7EBBEE18D0A91400D51BF2 /* TempSignViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TempSignViewController.xib; path = AutoDesk/Temp/TempSignViewController.xib; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 				1411212518C98FFB00B15C7B /* MainViewController.xib */,
 				A15588BE18CCB996006C209D /* MainTableViewCell.h */,
 				A15588BF18CCB996006C209D /* MainTableViewCell.m */,
+				6E280ACA18D201510037A3FB /* pen.png */,
 			);
 			path = MainViewController;
 			sourceTree = "<group>";
@@ -700,6 +703,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E7EBBF318D0CDC600D51BF2 /* data.sqlite in Resources */,
+				6E280ACB18D201510037A3FB /* pen.png in Resources */,
 				6E280AC918D1DB880037A3FB /* icon@2x.png in Resources */,
 				14F59E4518CED135004CD0BB /* avatar.png in Resources */,
 				1410A20A18CDB1B900965AF7 /* CustomerCell.xib in Resources */,

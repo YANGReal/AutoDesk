@@ -114,10 +114,6 @@
 }
 
 
-
-
-
-
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     takePhoto = NO;
@@ -126,78 +122,33 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    
     [super viewWillDisappear:animated];
     if (takePhoto)
     {
         return;
     }
-    
-    
-    if (self.isTemp)
-    {
-        if ([self.signView hasSignature]||photo)//临时签到
-        {
-             DLog(@"已经签到");
-            NSString *temp_sign = [AppUtility getObjectForKey:@"temp_sign"];
-            int i ;
-            if (temp_sign.length == 0)
-            {
-                i = 0;
-            }
-            else
-            {
-                i = temp_sign.intValue;
-            }
-            i++;
-            NSString *count = [NSString stringWithFormat:@"%d",i];
-            [AppUtility storeObject:count forKey:@"temp_sign"];
-            
-            if ([self.delegate respondsToSelector:@selector(goBackFromSignViewController)])
-            {
-                [self.delegate goBackFromSignViewController];
-            }
-
-        }
-        else
-        {
-            DLog(@"未签到");
-        }
-    
-    }
-    
     if ([self.signView hasSignature])
     {
         UIImage *img = [self.signView signatureImage];
         NSData *data = UIImagePNGRepresentation(img);
         
         NSString *fileName = nil;
-        if (!self.isTemp)//签到
+        fileName =  [NSString stringWithFormat:@"Sign/sign_%@_%@.png",_name,_desk];
+        NSString *temp_sign = [AppUtility getObjectForKey:@"sign_count"];
+        int i ;
+        if (temp_sign.length == 0)
         {
-           fileName =  [NSString stringWithFormat:@"Sign/sign_%@_%@.png",_name,_desk];
-            
-            NSString *temp_sign = [AppUtility getObjectForKey:@"sign_count"];
-            int i ;
-            if (temp_sign.length == 0)
-            {
-                i = 0;
-            }
-            else
-            {
-                i = temp_sign.intValue;
-            }
-            i++;
-            NSString *count = [NSString stringWithFormat:@"%d",i];
-            [AppUtility storeObject:count forKey:@"sign_count"];
-
-            
-            
+            i = 0;
         }
-        else//临时签到
+        else
         {
-            fileName = [NSString stringWithFormat:@"Temp_Sign/temp%@.png",[AppUtility timeStample]];
+            i = temp_sign.intValue;
         }
+        i++;
+        NSString *count = [NSString stringWithFormat:@"%d",i];
+        [AppUtility storeObject:count forKey:@"sign_count"];
         [data writeToFile:DOCUMENTS_PATH(fileName) atomically:YES];
+        [self.delegate passSignImage:self.signView.signatureImage];
     }
     
 }

@@ -46,10 +46,10 @@
 {
     [super viewDidLoad];
     
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:RECT(0, 0, 1024, 768)];
     imgView.contentMode = UIViewContentModeScaleToFill;
     [self.view insertSubview:imgView atIndex:0];
-    imgView.image = [UIImage imageWithContentsOfFile:DOCUMENTS_PATH(@"bg.png")];
+    imgView.image = [UIImage imageWithContentsOfFile:DOCUMENTS_PATH(@"bg2.png")];
     
     NSString *name = [_data stringAttribute:@"name"];
     NSString *deskNO = [_data stringAttribute:@"desk"];
@@ -94,6 +94,7 @@
 
 - (void)back
 {
+    //if ()
     [self.delegate backFromDetailViewController:self];
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -181,6 +182,7 @@
     i++;
     NSString *count = [NSString stringWithFormat:@"%d",i];
     [AppUtility storeObject:count forKey:@"photo"];
+    self.isPhoto = YES;
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -192,7 +194,10 @@
 
 - (void)passSignImage:(UIImage *)image
 {
-    DLog(@"已经签名");
+    if (image)
+    {
+        self.isSign = YES;
+    }
 }
 
 -  (UIImage *)addImageview:(UIImage *)image1 toImage:(UIImage *)image2
