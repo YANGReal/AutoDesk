@@ -71,7 +71,7 @@
     [self initDatabase];
     [self setupViews];
     [self setExpireDate:10];
-   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchWithText:) name:UITextFieldTextDidChangeNotification object:_searchBar.text];
+
     self.searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
    [self.searchBar addTarget:self action:@selector(searchWithText:) forControlEvents:UIControlEventEditingChanged];
 }
@@ -382,13 +382,27 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self searchWithText:textField];
+    
+    if (_searchDataArray.count == 0) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"无搜索结果,请重新搜索" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    else
+    {
     [self.searchBar resignFirstResponder];
+    }
     return YES;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     self.cancelBtn.enabled = YES;
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    self.searchBar.text = nil;
 }
 
 - (void)searchWithText:(UITextField *) sender
@@ -413,8 +427,8 @@
     self.searchDataArray = [AppUtility dataFromDB:DOCUMENTS_PATH(@"data.sqlite") withQuery:sql];
     
     if (_searchDataArray.count == 0) {
-       // UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"无搜索结果,请重新搜索" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
-       // [alertView show];
+//       UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"无搜索结果,请重新搜索" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
+//       [alertView show];
     }
     else
     {
