@@ -262,11 +262,16 @@
 
 - (NSInteger)quiltViewNumberOfCells:(TMQuiltView *)TMQuiltView
 {
-    if (_searchDataArray.count == 0)
+    if (_searchBar.text.length == 0)
     {
         self.cancelBtn.enabled = NO;
         return _allDataArray.count;
     }
+//    else if (_searchDataArray.count == 0 && _searchBar.resignFirstResponder == NO && _searchBar.editing == NO)
+//    {
+//        self.cancelBtn.enabled = NO;
+//        return _allDataArray.count;
+//    }
     else
     {
         self.cancelBtn.enabled = YES;
@@ -300,9 +305,13 @@
     {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"CustomerCell" owner:self options:nil] lastObject];
     }
-    if (_searchDataArray.count == 0) {
+    if (_searchBar.text.length == 0) {
         cell.data = _allDataArray[indexPath.row];
     }
+//    else if (_searchDataArray.count == 0 && _searchBar.resignFirstResponder == NO && _searchBar.editing == NO)
+//    {
+//        cell.data = _allDataArray[indexPath.row];
+//    }
     else
     {
         cell.data = _searchDataArray[indexPath.row];
@@ -417,7 +426,14 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self searchWithText:textField];
+    if (_searchDataArray.count == 0) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"无结果" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+    else
+    {
     [self.searchBar resignFirstResponder];
+    }
     return YES;
 }
 
@@ -431,6 +447,7 @@
     NSString *text = sender.text;
     if (text.length == 0)
     {
+        [self.mainTableView reloadData];
         return;
     }
     NSString *wildcard = [[NSString alloc] init];
@@ -464,11 +481,8 @@
             [_searchDataArray addObject:dict];
         }
     }
-
-    
-    if (_searchDataArray.count != 0) {
+    DLog(@"search = %@", _searchDataArray);
        [self.mainTableView reloadData];
-    }
 }
 
 #pragma mark -UIAlertViewDelegate method
@@ -480,8 +494,6 @@
         [self.mainTableView reloadData];
     }
 }
-
-
     
 - (void)didReceiveMemoryWarning
 {
