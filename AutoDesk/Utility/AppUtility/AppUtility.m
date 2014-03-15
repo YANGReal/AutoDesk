@@ -170,4 +170,10 @@
 }
 
 
++ (BOOL)iSRetinaiPad
+{
+    int scale = (int)[[UIScreen mainScreen] scale];
+    return scale == 2;
+}
+
 @end

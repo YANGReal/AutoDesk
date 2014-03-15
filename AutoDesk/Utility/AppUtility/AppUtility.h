@@ -53,5 +53,7 @@
 
 + (NSString *)timeStample;
 
++ (BOOL)iSRetinaiPad;
+
 
 @end

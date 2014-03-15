@@ -118,14 +118,11 @@
     UIImageView *imgView = [[UIImageView alloc] initWithFrame:self.view.bounds];
     imgView.contentMode = UIViewContentModeScaleToFill;
     [self.view insertSubview:imgView atIndex:0];
-    imgView.image = [UIImage imageWithContentsOfFile:DOCUMENTS_PATH(@"bg.png")];
-    //DLog(@"path = %@",CACH_DOCUMENTS_PATH(@"bg.png"));
-    //imgView.backgroundColor = [UIColor redColor];
-    self.cancelBtn.enabled = NO;
+    imgView.image = [UIImage imageWithContentsOfFile:DOCUMENTS_PATH(@"bg1.png")];
+        self.cancelBtn.enabled = NO;
     self.mainTableView = [[TMQuiltView alloc] initWithFrame:CGRectMake(0, 130, 1024, DEVICE_WIDTH - 130)];
     [self.mainTableView setDelegate:self];
     [self.mainTableView setDataSource:self];
-    //self.mainTableView.backgroundColor = [UIColor redColor];
     [self.view addSubview:_mainTableView];
     [self.mainTableView reloadData];
     
@@ -209,7 +206,7 @@
     DLog(@"data = %@",_allDataArray);
     NSDictionary *colum = _allDataArray[0];
     NSString *pinyin  = [colum stringAttribute:@"pinyin"];
-    DLog(@"pinyin = %@",pinyin);
+   
     if (pinyin.length == 0)
     {
         for (NSDictionary *dict in _allDataArray)
@@ -241,7 +238,7 @@
         
     }
     [self flushStatisticsData];
-//    DLog(@"data = %@", _allDataArray);
+
 }
 
 #pragma mark *****UITableViewDelegate*****
@@ -403,7 +400,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    self.searchBar.text = nil;
+    self.searchBar.text = @"";
 }
 
 - (void)searchWithText:(UITextField *) sender

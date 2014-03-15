@@ -22,6 +22,10 @@
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:mainVC];
     [self.window makeKeyAndVisible];
     [self createFolder];
+    
+    BOOL retina = [AppUtility iSRetinaiPad];
+    DLog(@"retina = %d",retina);
+    
     return YES;
 }
 
