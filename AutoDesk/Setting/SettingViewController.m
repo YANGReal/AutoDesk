@@ -36,7 +36,7 @@
     IBOutlet UISlider *timeOut;
     IBOutlet UILabel *timeLabel;
     
-    BOOL isConnected;
+
 }
 
 @property (strong , nonatomic) GRRequestsManager *requestsManager;
@@ -333,12 +333,11 @@
     [self.requestsManager addRequestForCreateDirectoryAtPath:@"photo/"];
     [self.requestsManager addRequestForCreateDirectoryAtPath:@"temp/"];
     [self.requestsManager startProcessingRequests];
-    [self performSelector:@selector(hideLoding) withObject:nil afterDelay:6.0];
+   // [self performSelector:@selector(hideLoding) withObject:nil afterDelay:6.0];
 }
 
 - (void)requestsManager:(id<GRRequestsManagerProtocol>)requestsManager didCompleteCreateDirectoryRequest:(id<GRRequestProtocol>)request
 {
-    isConnected = YES;
     [self hideMBLoading];
     [self showMBCompletedWithMessage:@"FTP设置成功"];
 }
@@ -350,25 +349,24 @@
     NSDictionary *dict = error.userInfo;
     if ([[dict stringAttribute:@"message"] isEqualToString:@"Can't overwrite directory!"])
     {
-        isConnected = YES;
-        [self hideMBLoading];
         [self showMBFailedWithMessage:@"FTP设置成功"];
     }
     else
     {
-        [self hideMBLoading];
+       
         [self showMBFailedWithMessage:@"FTP设置失败"];
 
     }
+     [self hideMBLoading];
 }
 
 - (void)hideLoding
 {
-    if (!isConnected)
-    {
-        [self hideMBLoading];
-        [self showMBFailedWithMessage:@"连接超时"];
-    }
+  
+    
+    [self hideMBLoading];
+    [self showMBFailedWithMessage:@"连接超时"];
+    
 }
 
 
@@ -408,8 +406,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 
 

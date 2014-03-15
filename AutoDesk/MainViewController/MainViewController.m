@@ -58,9 +58,8 @@
         {
             self.title = title;
         }
-        //DLog(@"title = %@",title);
         self.searchDataArray = [NSArray array];
-        self.allDataArray = [NSMutableArray array];
+        
     }
     return self;
 }
@@ -115,7 +114,7 @@
 
 - (void)setupViews
 {
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    UIImageView *imgView = [[UIImageView alloc] initWithFrame:RECT(0, 0, 1024, 768)];
     imgView.contentMode = UIViewContentModeScaleToFill;
     [self.view insertSubview:imgView atIndex:0];
     imgView.image = [UIImage imageWithContentsOfFile:DOCUMENTS_PATH(@"bg1.png")];
@@ -193,17 +192,33 @@
     {
         DLog(@"数据库文件已存在");
     }
+
     
-    NSArray *data = [AppUtility dataFromDB:DOCUMENTS_PATH(@"data.sqlite") withQuery:@"select * from data"];
-    
-    for(NSDictionary *record in data)
+    self.allDataArray = [NSKeyedUnarchiver unarchiveObjectWithFile:CACH_DOCUMENTS_PATH(@"data.plist")];
+    if (self.allDataArray.count == 0)
     {
-        if ([record stringAttribute:@"name"].length!=0)
+        NSArray *data = [AppUtility dataFromDB:DOCUMENTS_PATH(@"data.sqlite") withQuery:@"select * from data"];
+
+        self.allDataArray = [NSMutableArray array];
+        for(NSDictionary *record in data)
         {
-            [_allDataArray addObject:record];
+            if ([record stringAttribute:@"name"].length!=0)
+            {
+                NSString *name = [record stringAttribute:@"name"];
+                NSString *desk = [record stringAttribute:@"desk"];
+                NSString *choujiang = [record stringAttribute:@"choujiang"];
+                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                [dict setObject:name forKey:@"name"];
+                [dict setObject:desk forKey:@"desk"];
+                [dict setObject:choujiang forKey:@"choujiang"];
+                [dict setObject:@"NO" forKey:@"sign"];
+                [dict setObject:@"NO" forKey:@"photo"];
+                [_allDataArray addObject:dict];
+            }
         }
+
     }
-    DLog(@"data = %@",_allDataArray);
+     
     NSDictionary *colum = _allDataArray[0];
     NSString *pinyin  = [colum stringAttribute:@"pinyin"];
    
@@ -253,6 +268,7 @@
     }
     else
     {
+        DLog(@"_searchDataArray = %@",_searchDataArray);
         self.cancelBtn.enabled = YES;
         return _searchDataArray.count;
     }
@@ -319,6 +335,25 @@
 
 - (void)backFromDetailViewController:(DetailViewController *)vc
 {
+    NSString *NAME = [vc.data stringAttribute:@"name"];
+    for (NSMutableDictionary *dict in self.allDataArray)
+    {
+        NSString *name  = [dict stringAttribute:@"name"];
+        if ([name isEqualToString:NAME])
+        {
+            if (vc.isSign)
+            {
+                [dict setObject:@"YES" forKey:@"sign"];
+            }
+            if (vc.isPhoto)
+            {
+                [dict setObject:@"YES" forKey:@"photo"];
+            }
+        }
+    }
+    [NSKeyedArchiver archiveRootObject:self.allDataArray toFile:CACH_DOCUMENTS_PATH(@"data.plist")];
+    self.searchDataArray = nil;
+    [self.mainTableView reloadData];
     [self flushStatisticsData];
 }
 
@@ -382,12 +417,12 @@
     if (_searchDataArray.count == 0) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"无匹配结果,请重新搜索" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
         [alertView show];
-        self.searchBar.text = nil;
+        self.searchBar.text = @"";
         [self.mainTableView reloadData];
     }
     else
     {
-    [self.searchBar resignFirstResponder];
+        [self.searchBar resignFirstResponder];
     }
     return YES;
 }
@@ -408,6 +443,8 @@
     NSString *text = sender.text;
     if (text.length == 0)
     {
+        self.searchDataArray = nil;
+        [self.mainTableView reloadData];
         return;
     }
     NSString *wildcard = [[NSString alloc] init];
@@ -423,15 +460,7 @@
         self.searchDataArray = nil;
     }
     self.searchDataArray = [AppUtility dataFromDB:DOCUMENTS_PATH(@"data.sqlite") withQuery:sql];
-    
-    if (_searchDataArray.count == 0) {
-//       UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"无搜索结果,请重新搜索" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
-//       [alertView show];
-    }
-    else
-    {
-        [self.mainTableView reloadData];
-    }
+    [self.mainTableView reloadData];
 }
 
 #pragma mark -UIAlertViewDelegate method

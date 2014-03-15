@@ -168,7 +168,16 @@
     UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
     //self.imgView.image = img;
     [self dismissViewControllerAnimated:YES completion:nil];
-    self.imgView.image = img;
+    if ([AppUtility iSRetinaiPad])
+    {
+        CGSize size = CGSizeMake(img.size.width/3, img.size.height/3);
+        UIImage *scaleImg = [img scaleToSize:size];
+        self.imgView.image = scaleImg;
+    }
+    else
+    {
+         self.imgView.image = img;
+    }
     NSString *photo = [AppUtility getObjectForKey:@"photo"];
     int i ;
     if (photo.length == 0)
@@ -227,6 +236,7 @@
     NSString *server = [AppUtility getObjectForKey:@"server"];
     if(server.length == 0)
     {
+        [self savePhoto];
         [AppUtility showAlert:@"提示" message:@"还未设置FTP服务器"];
         return;
     }
@@ -282,7 +292,7 @@
     UIImage *img1 = [UIImage imageFromView:_label];
     UIImage *img2 = self.imgView.image;
     UIImage *img  = [self addImageview:img1 toImage:img2];
-    NSData *data = UIImageJPEGRepresentation(img, 0.75);
+    NSData *data = UIImageJPEGRepresentation(img, 0.5);
     [data writeToFile:CACH_DOCUMENTS_PATH(photoPath) atomically:YES];
     NSString *remotepath = [NSString stringWithFormat:@"photo/%@",[photoPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     DLog(@"remotePath = %@",remotepath);
@@ -328,15 +338,15 @@
     UIImage *img1 = [UIImage imageFromView:_label];
     UIImage *img2 = self.imgView.image;
     UIImage *img  = [self addImageview:img1 toImage:img2];
-    NSData *data = UIImagePNGRepresentation(img);
+    NSData *data = UIImageJPEGRepresentation(img, 1);
     NSString *choujiang = [_data stringAttribute:@"choujiang"];
     if ([choujiang isEqualToString:@"N"])
     {
-        NSString *path = [NSString stringWithFormat:@"Photo/N_%@_%@.png",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
+        NSString *path = [NSString stringWithFormat:@"Photo/N_%@_%@.jpg",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
         [data writeToFile:DOCUMENTS_PATH(path) atomically:YES];
         return;
     }
-    NSString *path = [NSString stringWithFormat:@"Photo/%@_%@.png",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
+    NSString *path = [NSString stringWithFormat:@"Photo/%@_%@.jpg",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
     [data writeToFile:DOCUMENTS_PATH(path) atomically:YES];
 
 }

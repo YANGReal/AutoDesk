@@ -141,6 +141,7 @@
     NSString *server = [AppUtility getObjectForKey:@"server"];
     if(server.length == 0)
     {
+        [self savePhoto];
         [AppUtility showAlert:@"提示" message:@"还未设置FTP服务器"];
         return;
     }
@@ -199,7 +200,7 @@
     timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timeOut:) userInfo:nil repeats:YES];
     
     [self showMBLoadingWithMessage:@"上传中..."];
-    NSData *data = UIImageJPEGRepresentation(snap, 0.75);//(snap);
+    NSData *data = UIImageJPEGRepresentation(snap, 0.5);//(snap);
     [data writeToFile:CACH_DOCUMENTS_PATH(photoPath) atomically:YES];
     NSString *remotepath = [NSString stringWithFormat:@"temp/%@",[photoPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
    // DLog(@"remotePath = %@",remotepath);
@@ -241,8 +242,8 @@
 - (void)savePhoto
 {
     self.dragView.hidden = NO;
-    NSData *data = UIImagePNGRepresentation(snap);
-    NSString *path = [NSString stringWithFormat:@"Temp_Sign/%@.png",[AppUtility timeStample]];
+    NSData *data = UIImageJPEGRepresentation(snap, 1);
+    NSString *path = [NSString stringWithFormat:@"Temp_Sign/%@.jpg",[AppUtility timeStample]];
    // DLog(@"path = %@",path);
     [data writeToFile:DOCUMENTS_PATH(path) atomically:YES];
 }
@@ -337,6 +338,11 @@
     
     takePhoto = NO;
     photo = [info objectForKey:UIImagePickerControllerOriginalImage];
+    if ([AppUtility iSRetinaiPad])
+    {
+        CGSize size = CGSizeMake(photo.size.width/3, photo.size.height/3);
+        photo = [photo scaleToSize:size];
+    }
     self.imgView.image = photo;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
