@@ -315,6 +315,7 @@
     [timer invalidate];
     time = 0;
     // }
+    [self savePhoto];
 }
 
 - (void)timeOut:(NSTimer *)t

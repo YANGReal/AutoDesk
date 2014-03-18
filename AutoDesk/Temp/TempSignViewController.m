@@ -99,6 +99,8 @@
     {
         timeOut = str.intValue;
     }
+    
+    [self takePhoto];
 
 }
 
@@ -118,7 +120,7 @@
     picker.showsCameraControls = YES;
     picker.delegate = self;
     picker.cameraDevice = UIImagePickerControllerCameraDeviceRear;
-    [self presentViewController:picker animated:YES completion:nil];
+    [self presentViewController:picker animated:NO completion:nil];
     
 }
 
@@ -203,10 +205,10 @@
     NSData *data = UIImageJPEGRepresentation(snap, 0.5);//(snap);
     [data writeToFile:CACH_DOCUMENTS_PATH(photoPath) atomically:YES];
     NSString *remotepath = [NSString stringWithFormat:@"temp/%@",[photoPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-   // DLog(@"remotePath = %@",remotepath);
-        NSString *localPath = [CACH_DOCUMENTS_PATH(photoPath) stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *localPath = [CACH_DOCUMENTS_PATH(photoPath) stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [self.requestsManager addRequestForUploadFileAtLocalPath:localPath toRemotePath:remotepath];
     [self.requestsManager startProcessingRequests];
+    
 }
 
 #pragma mark - FTP 代理方法
@@ -219,6 +221,7 @@
     [timer invalidate];
     time = 0;
     [self clearAllImages];
+    [self savePhoto];
     
     
 }
@@ -243,9 +246,7 @@
 {
     self.dragView.hidden = NO;
     NSData *data = UIImageJPEGRepresentation(snap, 1);
-    NSString *path = [NSString stringWithFormat:@"Temp_Sign/%@.jpg",[AppUtility timeStample]];
-   // DLog(@"path = %@",path);
-    [data writeToFile:DOCUMENTS_PATH(path) atomically:YES];
+    [data writeToFile:DOCUMENTS_PATH(photoPath) atomically:YES];
 }
 
 - (void)requestsManager:(id<GRRequestsManagerProtocol>)requestsManager didFailRequest:(id<GRRequestProtocol>)request withError:(NSError *)error
