@@ -197,6 +197,21 @@
     self.allDataArray = [NSKeyedUnarchiver unarchiveObjectWithFile:CACH_DOCUMENTS_PATH(@"data.plist")];
     if (self.allDataArray.count == 0)
     {
+        
+//        NSMutableArray *data = [NSMutableArray array];
+//        FMDatabase *db = [FMDatabase databaseWithPath:path];
+//        if ([db open])
+//        {
+//            FMResultSet *result = [db executeQuery:@"select * from data"];
+//            while ([result next])
+//            {
+//                [data addObject:[result resultDictionary]];
+//            }
+//            [result close];
+//        }
+//        [db close];
+
+        
         NSArray *data = [AppUtility dataFromDB:DOCUMENTS_PATH(@"data.sqlite") withQuery:@"select * from data"];
 
         self.allDataArray = [NSMutableArray array];
@@ -207,12 +222,14 @@
                 NSString *name = [record stringAttribute:@"name"];
                 NSString *desk = [record stringAttribute:@"desk"];
                 NSString *choujiang = [record stringAttribute:@"choujiang"];
+                NSString *pinyin = [record stringAttribute:@"pinyin"];
                 NSMutableDictionary *dict = [NSMutableDictionary dictionary];
                 [dict setObject:name forKey:@"name"];
                 [dict setObject:desk forKey:@"desk"];
                 [dict setObject:choujiang forKey:@"choujiang"];
                 [dict setObject:@"NO" forKey:@"sign"];
                 [dict setObject:@"NO" forKey:@"photo"];
+                [dict setObject:pinyin forKey:@"pinyin"];
                 [_allDataArray addObject:dict];
             }
         }
@@ -220,36 +237,45 @@
     }
      
     NSDictionary *colum = _allDataArray[0];
+    DLog(@"colum = %@",colum);
     NSString *pinyin  = [colum stringAttribute:@"pinyin"];
-   
+    DLog(@"pinyin = %@",pinyin);
     if (pinyin.length == 0)
     {
-        for (NSDictionary *dict in _allDataArray)
+        FMDatabase *db = [FMDatabase databaseWithPath:DOCUMENTS_PATH(@"data.sqlite")];
+        if ([db open])
         {
-            NSString *name = [dict stringAttribute:@"name"];
-            if ([ChineseInclude isIncludeChineseInString:name]) {
-            NSString *initial = [PinYinForObjc chineseConvertToPinYinHead:name];
-
-            NSString *sql = [NSString stringWithFormat:@"update  data set pinyin = '%@' where name = '%@'",initial,name];
-            [AppUtility updateDB:DOCUMENTS_PATH(@"data.sqlite") WithSQL:sql];
-            }
-            else
+            for (NSDictionary *dict in _allDataArray)
             {
-                NSArray *words = [name componentsSeparatedByString:@" "];
-
-                NSString *str = [[NSString alloc]init];
-                for (NSString *word in words)
+                NSString *name = [dict stringAttribute:@"name"];
+                if ([ChineseInclude isIncludeChineseInString:name])
                 {
-                    if ([word isEqual:@""]) {
-                        continue;
-                    }
-                    char j = [word characterAtIndex:0];
-                    str = [str stringByAppendingString:[NSString stringWithFormat:@"%c", j]];
+                    NSString *initial = [PinYinForObjc chineseConvertToPinYinHead:name];
+                    
+                    NSString *sql = [NSString stringWithFormat:@"update  data set pinyin = '%@' where name = '%@'",initial,name];
+                    [db executeUpdate:sql];
+                    //[AppUtility updateDB:DOCUMENTS_PATH(@"data.sqlite") WithSQL:sql];
                 }
-                NSString *sql = [NSString stringWithFormat:@"update  data set pinyin = '%@' where name = '%@'",str,name];
-                [AppUtility updateDB:DOCUMENTS_PATH(@"data.sqlite") WithSQL:sql];
+                else
+                {
+                    NSArray *words = [name componentsSeparatedByString:@" "];
+                    NSString *str = [[NSString alloc]init];
+                    for (NSString *word in words)
+                    {
+                        if ([word isEqual:@""])
+                        {
+                            continue;
+                        }
+                        char j = [word characterAtIndex:0];
+                        str = [str stringByAppendingString:[NSString stringWithFormat:@"%c", j]];
+                    }
+                    NSString *sql = [NSString stringWithFormat:@"update  data set pinyin = '%@' where name = '%@'",str,name];
+                    [db executeUpdate:sql];
+                   // [AppUtility updateDB:DOCUMENTS_PATH(@"data.sqlite") WithSQL:sql];
+                }
             }
         }
+        [db close];
         
     }
     [self flushStatisticsData];
