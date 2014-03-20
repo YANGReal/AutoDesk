@@ -68,8 +68,8 @@
 {
     [super viewDidLoad];
     //[self performSelectorInBackground:@selector(initDatabase) withObject:nil];
-    [self performSelectorOnMainThread:@selector(initDatabase) withObject:nil waitUntilDone:YES];
-  
+    //[self performSelectorOnMainThread:@selector(initDatabase) withObject:nil waitUntilDone:YES];
+    [self initDatabase];
     [self setupViews];
     [self setExpireDate:10];
 
@@ -223,7 +223,7 @@
             if ([record stringAttribute:@"name"].length!=0)
             {
                 NSString *name = [record stringAttribute:@"name"];
-                NSString *desk = [record stringAttribute:@"desk"];
+                NSString *desk = [[record stringAttribute:@"desk"] stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
                 NSString *choujiang = [record stringAttribute:@"choujiang"];
                 NSString *pinyin = [record stringAttribute:@"pinyin"];
                 NSMutableDictionary *dict = [NSMutableDictionary dictionary];

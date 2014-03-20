@@ -268,13 +268,14 @@
 - (void)uploadToFTP
 {
     NSString *choujiang = [_data stringAttribute:@"choujiang"];
+    NSString *desk = [[_data stringAttribute:@"desk"] stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
     if ([choujiang isEqualToString:@"N"])
     {
-        photoPath = [NSString stringWithFormat:@"N_%@_%@.jpg",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
+        photoPath = [NSString stringWithFormat:@"N_%@_%@.jpg",[_data stringAttribute:@"name"],desk];
     }
     else
     {
-        photoPath = [NSString stringWithFormat:@"%@_%@.jpg",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
+        photoPath = [NSString stringWithFormat:@"%@_%@.jpg",[_data stringAttribute:@"name"],desk];
 
     }
     [self _setupManager];
@@ -347,7 +348,8 @@
         [data writeToFile:DOCUMENTS_PATH(path) atomically:YES];
         return;
     }
-    NSString *path = [NSString stringWithFormat:@"Photo/%@_%@.jpg",[_data stringAttribute:@"name"],[_data stringAttribute:@"desk"]];
+    NSString *desk = [[_data stringAttribute:@"desk"] stringByReplacingOccurrencesOfString:@"/" withString:@"-"];
+    NSString *path = [NSString stringWithFormat:@"Photo/%@_%@.jpg",[_data stringAttribute:@"name"],desk];
     [data writeToFile:DOCUMENTS_PATH(path) atomically:YES];
 
 }
