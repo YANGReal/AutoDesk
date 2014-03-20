@@ -67,7 +67,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initDatabase];
+    //[self performSelectorInBackground:@selector(initDatabase) withObject:nil];
+    [self performSelectorOnMainThread:@selector(initDatabase) withObject:nil waitUntilDone:YES];
+  
     [self setupViews];
     [self setExpireDate:10];
 
@@ -193,6 +195,7 @@
         DLog(@"数据库文件已存在");
     }
 
+    
     
     self.allDataArray = [NSKeyedUnarchiver unarchiveObjectWithFile:CACH_DOCUMENTS_PATH(@"data.plist")];
     if (self.allDataArray.count == 0)
