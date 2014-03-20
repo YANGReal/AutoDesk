@@ -313,6 +313,7 @@
     [self showMBCompletedWithMessage:@"上传成功"];
     //[self hideMBLoading];
     //   i = 0;
+    [self.navigationController popViewControllerAnimated:YES];
     [timer invalidate];
     time = 0;
     // }

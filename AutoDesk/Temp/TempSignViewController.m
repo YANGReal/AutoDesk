@@ -134,6 +134,7 @@
 {
     self.dragView.hidden = YES;
     [self uploadToFTP];
+    [self savePhoto];
 }
 
 
