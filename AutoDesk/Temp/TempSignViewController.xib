@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1536</int>
 		<string key="IBDocument.SystemVersion">13C64</string>
-		<string key="IBDocument.InterfaceBuilderVersion">4514</string>
+		<string key="IBDocument.InterfaceBuilderVersion">5053</string>
 		<string key="IBDocument.AppKitVersion">1265.19</string>
 		<string key="IBDocument.HIToolboxVersion">697.40</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">3747</string>
+			<string key="NS.object.0">3733</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -56,16 +56,17 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{56, 80}, {46, 48}}</string>
 								<reference key="NSSuperview" ref="868377493"/>
+								<reference key="NSNextKeyView" ref="685689986"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<int key="IBUIButtonType">1</int>
-								<object class="NSColor" key="IBUINormalTitleColor" id="385630511">
+								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
 								</object>
-								<object class="NSColor" key="IBUIHighlightedTitleColor" id="617579003">
+								<object class="NSColor" key="IBUIHighlightedTitleColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
 								</object>
@@ -77,11 +78,11 @@
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">save.png</string>
 								</object>
-								<object class="IBUIFontDescription" key="IBUIFontDescription" id="235830791">
+								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<int key="type">2</int>
 									<double key="pointSize">15</double>
 								</object>
-								<object class="NSFont" key="IBUIFont" id="890128839">
+								<object class="NSFont" key="IBUIFont">
 									<string key="NSName">HelveticaNeue-Bold</string>
 									<double key="NSSize">15</double>
 									<int key="NSfFlags">16</int>
@@ -89,23 +90,28 @@
 							</object>
 							<object class="IBUIButton" id="685689986">
 								<reference key="NSNextResponder" ref="868377493"/>
-								<int key="NSvFlags">-2147483356</int>
-								<string key="NSFrame">{{54, 172}, {50, 50}}</string>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{43, 172}, {72, 50}}</string>
 								<reference key="NSSuperview" ref="868377493"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<int key="IBUIButtonType">1</int>
-								<reference key="IBUINormalTitleColor" ref="385630511"/>
-								<reference key="IBUIHighlightedTitleColor" ref="617579003"/>
-								<reference key="IBUINormalTitleShadowColor" ref="317777171"/>
-								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">camera.png</string>
+								<object class="NSColor" key="IBUINormalTitleColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC45MzMzMzMzMzMzIDAuMjcwNTg4MjM1MyAwLjE3MjU0OTAxOTYAA</bytes>
 								</object>
-								<reference key="IBUIFontDescription" ref="235830791"/>
-								<reference key="IBUIFont" ref="890128839"/>
+								<string key="IBUINormalTitle">清除签名</string>
+								<reference key="IBUINormalTitleShadowColor" ref="317777171"/>
+								<object class="IBUIFontDescription" key="IBUIFontDescription">
+									<int key="type">1</int>
+									<double key="pointSize">18</double>
+								</object>
+								<object class="NSFont" key="IBUIFont">
+									<string key="NSName">HelveticaNeue</string>
+									<double key="NSSize">18</double>
+									<int key="NSfFlags">16</int>
+								</object>
 							</object>
 						</array>
 						<string key="NSFrame">{{0, 197}, {171, 284}}</string>
@@ -176,12 +182,12 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">takePhoto:</string>
+						<string key="label">clearBtnClicked:</string>
 						<reference key="source" ref="685689986"/>
 						<reference key="destination" ref="537315371"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<string key="id">YhU-45-fPD</string>
+					<string key="id">OI0-ke-XZU</string>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -280,10 +286,10 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="camera.png">{512, 512}</string>
-			<string key="save.png">{128, 128}</string>
-		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">3747</string>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NS.key.0">save.png</string>
+			<string key="NS.object.0">{128, 128}</string>
+		</object>
+		<string key="IBCocoaTouchPluginVersion">3733</string>
 	</data>
 </archive>

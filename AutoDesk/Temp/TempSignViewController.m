@@ -30,6 +30,8 @@
 
 - (IBAction)takePhoto:(id)sender;
 
+- (IBAction)clearBtnClicked:(id)sender;
+
 @end
 
 @implementation TempSignViewController
@@ -83,10 +85,10 @@
     self.signView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.signView];
     
-    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clear)];
-   // UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithTitle:@"拍照" style:UIBarButtonItemStylePlain target:self action:@selector(takePhoto)];
-    
-    self.navigationItem.rightBarButtonItems = @[item1];
+//    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithTitle:@"清除" style:UIBarButtonItemStylePlain target:self action:@selector(clear)];
+//   // UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithTitle:@"拍照" style:UIBarButtonItemStylePlain target:self action:@selector(takePhoto)];
+//    
+//    self.navigationItem.rightBarButtonItems = @[item1];
     [self.view bringSubviewToFront:self.dragView];
     
     
@@ -104,6 +106,10 @@
 
 }
 
+- (IBAction)clearBtnClicked:(id)sender
+{
+    [self clear];
+}
 
 - (void)clear
 {
@@ -223,6 +229,7 @@
     time = 0;
     [self clearAllImages];
     [self savePhoto];
+    [self.navigationController popViewControllerAnimated:YES];
     
     
 }
@@ -300,7 +307,7 @@
     
     if ([self.signView hasSignature]||photo)
     {
-        DLog(@"签到");
+      //  DLog(@"签到");
         NSString *temp_sign = [AppUtility getObjectForKey:@"temp_sign"];
         int i ;
         if (temp_sign.length == 0)
