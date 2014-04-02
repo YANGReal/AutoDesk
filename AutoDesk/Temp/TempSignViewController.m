@@ -252,8 +252,9 @@
 
 - (void)savePhoto
 {
-    self.dragView.hidden = NO;
+    self.dragView.hidden = YES;
     NSData *data = UIImageJPEGRepresentation(snap, 1);
+    DLog(@"path = %@",photoPath);
     [data writeToFile:DOCUMENTS_PATH(photoPath) atomically:YES];
 }
 

@@ -23,8 +23,8 @@
     [self.window makeKeyAndVisible];
     [self createFolder];
     
-    BOOL retina = [AppUtility iSRetinaiPad];
-    DLog(@"retina = %d",retina);
+//    BOOL retina = [AppUtility iSRetinaiPad];
+//    DLog(@"retina = %d",retina);
     
     return YES;
 }
